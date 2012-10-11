@@ -26,9 +26,10 @@ group :development do
   gem 'rspec-rails', '2.10.1'
 end
 
+
 group :test do
   gem 'cucumber', '1.2.1'
-  gem 'cucumber-rails', '1.2.1'
+  gem 'cucumber-rails', '1.2.1', :require => false
   gem 'database_cleaner', '0.8.0'
   gem 'rspec', '2.10.0'
   gem 'webrat', '0.7.3'
