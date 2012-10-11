@@ -7,6 +7,8 @@ gem 'rails', '3.2.6'
 
 gem 'sqlite3'
 
+# Gem used for user authentication.
+gem 'devise', '2.1.2'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -18,6 +20,19 @@ group :assets do
   gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+end
+
+group :development do
+  gem 'rspec-rails', '2.10.1'
+end
+
+group :test do
+  gem 'cucumber', '1.2.1'
+  gem 'cucumber-rails', '1.2.1'
+  gem 'database_cleaner', '0.8.0'
+  gem 'rspec', '2.10.0'
+  gem 'webrat', '0.7.3'
+  gem 'email_spec', '1.2.1'
 end
 
 gem 'jquery-rails'
