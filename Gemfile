@@ -33,6 +33,7 @@ group :test do
   gem 'rspec', '2.10.0'
   gem 'webrat', '0.7.3'
   gem 'email_spec', '1.2.1'
+  gem 'factory_girl_rails', '4.1.0'
 end
 
 gem 'jquery-rails'
