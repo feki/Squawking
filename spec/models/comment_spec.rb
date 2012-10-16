@@ -58,4 +58,21 @@ describe Comment do
       @comment.commentable.should      == @answer
     end
   end
+
+  describe "commentable(reaction) associations" do
+    before(:each) do
+      @reaction = @user.reactions.create!(:content => "Some reaction")
+      @comment  = @user.comments.create!(:content => "Some comment", :commentable => @reaction)
+    end
+
+    it "should have an commentable attribute" do
+      @comment.should respond_to(:commentable)
+    end
+
+    it "it should have the right associated answer" do
+      @comment.commentable_id.should   == @reaction.id
+      @comment.commentable_type.should == Reaction.name
+      @comment.commentable.should      == @reaction
+    end
+  end
 end

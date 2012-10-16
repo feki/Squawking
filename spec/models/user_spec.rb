@@ -48,7 +48,7 @@ describe User do
     end
   end
 
-  describe "comment association" do
+  describe "comments association" do
     before(:each) do
       @user = User.create(@attr)
       @answ = FactoryGirl.create(:answer, :user => @user, 
@@ -66,10 +66,10 @@ describe User do
     end
   end
 
-  describe "answer association" do
+  describe "answers association" do
     before(:each) do
-      @user = User.create(@attr)
-      @answ = FactoryGirl.create(:answer, :user => @user)
+      @user   = User.create(@attr)
+      @answer = FactoryGirl.create(:answer, :user => @user)
     end
 
     it "should have an answers attribute" do
@@ -78,13 +78,13 @@ describe User do
 
     it "should destroy associated answers" do
       @user.destroy
-      Answer.find_by_id(@answ.id).should be_nil
+      Answer.find_by_id(@answer.id).should be_nil
     end
   end
 
-  describe "question association" do
+  describe "questions association" do
     before(:each) do
-      @user = User.create(@attr)
+      @user     = User.create(@attr)
       @question = FactoryGirl.create(:question, :user => @user)
     end
 
@@ -95,6 +95,22 @@ describe User do
     it "should destroy associated questions" do
       @user.destroy
       Question.find_by_id(@question.id).should be_nil
+    end
+  end
+
+  describe "reactions association" do
+    before(:each) do
+      @user     = User.create(@attr)
+      @reaction = FactoryGirl.create(:reaction, :user => @user)
+    end
+
+    it "should have a reactions attribute" do
+      @user.should respond_to(:reactions)
+    end
+
+    it "should destroy associated reactions" do
+      @user.destroy
+      Reaction.find_by_id(@reaction.id).should be_nil
     end
   end
 end

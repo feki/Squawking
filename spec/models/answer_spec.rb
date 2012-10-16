@@ -30,7 +30,7 @@ describe Answer do
       @answer = @user.answers.create!(@attr)
     end
 
-    it "should have a user attribute" do
+    it "should have an user attribute" do
       @answer.should respond_to(:user)
     end
 

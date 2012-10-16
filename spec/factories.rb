@@ -21,4 +21,9 @@ FactoryGirl.define do
     content     "Some question"
     association :user
   end
+
+  factory :reaction do |reaction|
+    content     "Some reaction"
+    association :user
+  end
 end
