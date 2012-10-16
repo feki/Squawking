@@ -7,6 +7,18 @@ FactoryGirl.define do
 
   factory :comment do |comment|
     content     "Some comment"
+    association :commentable
+    association :user
+  end
+
+  factory :answer do |answer|
+    content     "Some answer"
+    association :user
+    association :question
+  end
+
+  factory :question do |question|
+    content     "Some question"
     association :user
   end
 end

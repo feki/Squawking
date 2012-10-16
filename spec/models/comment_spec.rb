@@ -3,7 +3,9 @@ require 'spec_helper'
 describe Comment do
   before(:each) do
     @user = FactoryGirl.create(:user)
-    @attr = { :content => "Some comment" }
+    @attr = { :content => "Some comment", 
+              :commentable => FactoryGirl.create(:answer, :user => @user,
+                                                 :question => FactoryGirl.create(:question, :user => @user)) }
   end
 
   it "should create a new instance given valid attributes" do
@@ -32,6 +34,28 @@ describe Comment do
 
     it "should require a nonblank content" do
       @user.comments.build(:content => "    ").should_not be_valid
+    end
+
+    it "should require a commentable id" do
+      @user.comments.build(:content => @attr).should_not be_valid
+    end
+  end
+
+  describe "commentable(answer) associations" do
+    before(:each) do
+      @question = @user.questions.create!(:content => "Some question")
+      @answer   = @user.answers.create!(:content => "Some answer", :question => @question)
+      @comment  = @user.comments.create!(:content => "Some comment", :commentable => @answer)
+    end
+
+    it "should have an commentable attribute" do
+      @comment.should respond_to(:commentable)
+    end
+
+    it "it should have the right associated answer" do
+      @comment.commentable_id.should   == @answer.id
+      @comment.commentable_type.should == Answer.name
+      @comment.commentable.should      == @answer
     end
   end
 end

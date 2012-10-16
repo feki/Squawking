@@ -33,6 +33,11 @@ describe User do
     end
   end
 
+  it "should reject duplicate email address" do
+    User.create!(@attr)
+    User.new(@attr).should_not be_valid # user with the same email
+  end
+
   describe "password validations" do
     it "should required a password" do
       User.new(@attr.merge(:password => "", :password_confirmation => "")).should_not be_valid
@@ -46,7 +51,9 @@ describe User do
   describe "comment association" do
     before(:each) do
       @user = User.create(@attr)
-      @comm = FactoryGirl.create(:comment, :user => @user)
+      @answ = FactoryGirl.create(:answer, :user => @user, 
+                                 :question => FactoryGirl.create(:question, :user => @user))
+      @comm = FactoryGirl.create(:comment, :user => @user, :commentable => @answ)
     end
 
     it "should have a comments attribute" do
@@ -56,6 +63,38 @@ describe User do
     it "should destroy associated comments" do
       @user.destroy
       Comment.find_by_id(@comm.id).should be_nil
+    end
+  end
+
+  describe "answer association" do
+    before(:each) do
+      @user = User.create(@attr)
+      @answ = FactoryGirl.create(:answer, :user => @user)
+    end
+
+    it "should have an answers attribute" do
+      @user.should respond_to(:answers)
+    end
+
+    it "should destroy associated answers" do
+      @user.destroy
+      Answer.find_by_id(@answ.id).should be_nil
+    end
+  end
+
+  describe "question association" do
+    before(:each) do
+      @user = User.create(@attr)
+      @question = FactoryGirl.create(:question, :user => @user)
+    end
+
+    it "should have a questions attribute" do
+      @user.should respond_to(:questions)
+    end
+
+    it "should destroy associated questions" do
+      @user.destroy
+      Question.find_by_id(@question.id).should be_nil
     end
   end
 end
