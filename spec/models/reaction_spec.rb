@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe Reaction do
   before(:each) do
-    @user = FactoryGirl.create(:user)
-    @attr = { :content => "Some reaction" }
+    @user    = FactoryGirl.create(:user)
+    @article = FactoryGirl.create(:article, :user => @user)
+    @attr    = { :content => "Some reaction", :article => @article }
   end
 
   it "should create a new instance given valid attributes" do
@@ -17,6 +18,10 @@ describe Reaction do
 
     it "should require a nonblank content" do
       @user.reactions.build(:content => "    ").should_not be_valid
+    end
+
+    it "should required an article id" do
+      @user.reactions.build(@attr.merge(:article => nil)).should_not be_valid
     end
   end
 
@@ -52,6 +57,21 @@ describe Reaction do
     it "should destroy associated comments" do
       @reaction.destroy
       Comment.find_by_id(@comment.id).should be_nil
+    end
+  end
+
+  describe "article association" do
+    before(:each) do
+      @reaction = @user.reactions.create!(@attr)
+    end
+
+    it "should have an article attribute" do
+      @reaction.should respond_to(:article)
+    end
+
+    it "should have the right associated article" do
+      @reaction.article_id.should == @article.id
+      @reaction.article.should    == @article
     end
   end
 end

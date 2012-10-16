@@ -10,10 +10,11 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
 
-  has_many :comments, :dependent => :destroy
-  has_many :answers, :dependent => :destroy
+  has_many :comments,  :dependent => :destroy
+  has_many :answers,   :dependent => :destroy
   has_many :questions, :dependent => :destroy
   has_many :reactions, :dependent => :destroy
+  has_many :articles,  :dependent => :destroy
 
   email_regexp = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, :format => { :with => email_regexp }

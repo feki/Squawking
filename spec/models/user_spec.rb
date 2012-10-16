@@ -113,4 +113,20 @@ describe User do
       Reaction.find_by_id(@reaction.id).should be_nil
     end
   end
+
+  describe "articles association" do
+    before(:each) do
+      @user    = User.create(@attr)
+      @article = FactoryGirl.create(:article, :user => @user)
+    end
+
+    it "should have an articles attribute" do
+      @user.should respond_to(:articles)
+    end
+
+    it "should destroy associated articles" do
+      @user.destroy
+      Article.find_by_id(@article.id).should be_nil
+    end
+  end
 end

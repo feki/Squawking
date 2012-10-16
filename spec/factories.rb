@@ -25,5 +25,11 @@ FactoryGirl.define do
   factory :reaction do |reaction|
     content     "Some reaction"
     association :user
+    association :article
+  end
+
+  factory :article do |article|
+    content     "Some article"
+    association :user
   end
 end

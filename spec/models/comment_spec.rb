@@ -61,7 +61,8 @@ describe Comment do
 
   describe "commentable(reaction) associations" do
     before(:each) do
-      @reaction = @user.reactions.create!(:content => "Some reaction")
+      @article  = @user.articles.create!(:content => "Some article")
+      @reaction = @user.reactions.create!(:content => "Some reaction", :article => @article)
       @comment  = @user.comments.create!(:content => "Some comment", :commentable => @reaction)
     end
 
