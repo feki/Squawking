@@ -30,6 +30,7 @@ FactoryGirl.define do
 
   factory :article do |article|
     content     "Some article"
+    title       "Some title"
     association :user
   end
 end

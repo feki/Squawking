@@ -3,9 +3,8 @@ require 'spec_helper'
 describe Comment do
   before(:each) do
     @user = FactoryGirl.create(:user)
-    @attr = { :content => "Some comment", 
-              :commentable => FactoryGirl.create(:answer, :user => @user,
-                                                 :question => FactoryGirl.create(:question, :user => @user)) }
+    @attr = { content: "Some comment", 
+              commentable: FactoryGirl.create(:answer, user: @user, question: FactoryGirl.create(:question, user: @user)) }
   end
 
   it "should create a new instance given valid attributes" do
@@ -33,19 +32,19 @@ describe Comment do
     end
 
     it "should require a nonblank content" do
-      @user.comments.build(:content => "    ").should_not be_valid
+      @user.comments.build(content: "    ").should_not be_valid
     end
 
     it "should require a commentable id" do
-      @user.comments.build(:content => @attr).should_not be_valid
+      @user.comments.build(content: @attr).should_not be_valid
     end
   end
 
   describe "commentable(answer) associations" do
     before(:each) do
-      @question = @user.questions.create!(:content => "Some question")
-      @answer   = @user.answers.create!(:content => "Some answer", :question => @question)
-      @comment  = @user.comments.create!(:content => "Some comment", :commentable => @answer)
+      @question = @user.questions.create!(content: "Some question")
+      @answer   = @user.answers.create!(content: "Some answer", question: @question)
+      @comment  = @user.comments.create!(content: "Some comment", commentable: @answer)
     end
 
     it "should have an commentable attribute" do
@@ -61,9 +60,9 @@ describe Comment do
 
   describe "commentable(reaction) associations" do
     before(:each) do
-      @article  = @user.articles.create!(:content => "Some article")
-      @reaction = @user.reactions.create!(:content => "Some reaction", :article => @article)
-      @comment  = @user.comments.create!(:content => "Some comment", :commentable => @reaction)
+      @article  = @user.articles.create!(content: "Some article", title: "Some title")
+      @reaction = @user.reactions.create!(content: "Some reaction", article: @article)
+      @comment  = @user.comments.create!(content: "Some comment", commentable: @reaction)
     end
 
     it "should have an commentable attribute" do

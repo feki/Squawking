@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Article do
   before(:each) do
     @user = FactoryGirl.create(:user)
-    @attr = { :content => "Some article" }
+    @attr = { content: "Some article", title: "Some title" }
   end
 
   describe "validations" do
@@ -12,7 +12,11 @@ describe Article do
     end
 
     it "should require a nonblank content" do
-      @user.articles.build(:content => "    ").should_not be_valid
+      @user.articles.build(@attr.merge(content: "    ")).should_not be_valid
+    end
+
+    it "should require a nonblank title" do
+      @user.articles.build(@attr.merge(title: "    ")).should_not be_valid
     end
   end
 
@@ -34,7 +38,7 @@ describe Article do
   describe "reactions association" do
     before(:each) do
       @article  = @user.articles.create!(@attr)
-      @reaction = @user.reactions.create!(:content => "Some reaction", :article => @article)
+      @reaction = @user.reactions.create!(content: "Some reaction", article: @article)
     end
 
     it "should have a reactions attribute" do
