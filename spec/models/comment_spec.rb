@@ -42,7 +42,7 @@ describe Comment do
 
   describe "commentable(answer) associations" do
     before(:each) do
-      @question = @user.questions.create!(content: "Some question")
+      @question = @user.questions.create!(content: "Some question", project: FactoryGirl.create(:project))
       @answer   = @user.answers.create!(content: "Some answer", question: @question)
       @comment  = @user.comments.create!(content: "Some comment", commentable: @answer)
     end
@@ -60,7 +60,7 @@ describe Comment do
 
   describe "commentable(reaction) associations" do
     before(:each) do
-      @article  = @user.articles.create!(content: "Some article", title: "Some title")
+      @article  = @user.articles.create!(content: "Some article", title: "Some title", project: FactoryGirl.create(:project))
       @reaction = @user.reactions.create!(content: "Some reaction", article: @article)
       @comment  = @user.comments.create!(content: "Some comment", commentable: @reaction)
     end

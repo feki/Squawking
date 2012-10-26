@@ -1,9 +1,11 @@
 class Question < ActiveRecord::Base
-  attr_accessible :content
+  attr_accessible :content, :project
 
-  validates :content, :presence => true
-  validates :user_id, :presence => true
+  validates :content, presence: true
+  validates :user_id, presence: true
+  validates :project, presence: true
 
   belongs_to :user
-  has_many   :answers, :dependent => :destroy
+  belongs_to :project
+  has_many   :answers, dependent: :destroy
 end

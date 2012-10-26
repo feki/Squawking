@@ -57,7 +57,8 @@ describe Question do
 
   describe "project association" do
     before(:each) do
-      @question = @user.questions.create!(@attr)
+      @project = FactoryGirl.create(:project)
+      @question = @user.questions.create!(@attr.merge(project: @project))
     end
 
     it "should have the project attribute" do

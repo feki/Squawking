@@ -61,7 +61,8 @@ describe Article do
 
   describe "project association" do
     before(:each) do
-      @article = @user.articles.create!(@attr)
+      @project = FactoryGirl.create(:project)
+      @article = @user.articles.create!(@attr.merge(project: @project))
     end
 
     it "should have the project attribute" do

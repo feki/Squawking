@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Project do
   before(:each) do
-    @user = FactoryGril.create(:user)
+    @user = FactoryGirl.create(:user)
     @attr = { name: "Some project", description: "Description of some project" }
   end
 
@@ -19,7 +19,7 @@ describe Project do
   describe "articles association" do
     before(:each) do
       @project = Project.new(@attr)
-      @article = @user.article.create!(title: "Some title", content: "Some content", project: @project)
+      @article = @user.articles.create!(title: "Some title", content: "Some content", project: @project)
     end
 
     it "should have an articles attribute" do
@@ -38,8 +38,8 @@ describe Project do
 
   describe "questions association" do
     before(:each) do
-      @project = Projec.new(@attr)
-      @question = @user.questions.create!(content: "Some question")
+      @project = Project.new(@attr)
+      @question = @user.questions.create!(content: "Some question", project: @project)
     end
 
     it "should have a questions attribute" do
