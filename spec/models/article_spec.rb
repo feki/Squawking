@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Article do
   before(:each) do
     @user = FactoryGirl.create(:user)
-    @attr = { content: "Some article", title: "Some title" }
+    @attr = { content: "Some article", title: "Some title", project: FactoryGirl.create(:project) }
   end
 
   describe "validations" do
@@ -17,6 +17,10 @@ describe Article do
 
     it "should require a nonblank title" do
       @user.articles.build(@attr.merge(title: "    ")).should_not be_valid
+    end
+
+    it "should require a project id" do
+      @user.articles.build(@attr.merge(project: nil)).should_not be_valid
     end
   end
 
@@ -52,6 +56,21 @@ describe Article do
     it "should destroy associated reactions" do
       @article.destroy
       Reaction.find_by_id(@reaction.id).should be_nil
+    end
+  end
+
+  describe "project association" do
+    before(:each) do
+      @article = @user.articles.create!(@attr)
+    end
+
+    it "should have the project attribute" do
+      @article.should respond_to(:project)
+    end
+
+    it "should have the right associated project" do
+      @article.project_id.should == @project.id
+      @article.project.should    == @project
     end
   end
 end

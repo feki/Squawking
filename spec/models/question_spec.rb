@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Question do
   before(:each) do
     @user = FactoryGirl.create(:user)
-    @attr = { :content => "Some question" }
+    @attr = { content: "Some question", project: FactoryGirl.create(:project) }
   end
 
   describe "validations" do
@@ -12,7 +12,11 @@ describe Question do
     end
 
     it "should require a nonblack content" do
-      @user.questions.build(:content => "    ").should_not be_valid
+      @user.questions.build(@attr.merge(content: "    ")).should_not be_valid
+    end
+
+    it "should require a project id" do
+      @user.questions.build(@attr.merge(project: nil)).should_not be_valid
     end
   end
 
@@ -34,7 +38,7 @@ describe Question do
   describe "answer associations" do
     before(:each) do
       @question = @user.questions.create!(@attr)
-      @answer   = @user.answers.create!(:content => "Some answer", :question => @question)
+      @answer   = @user.answers.create!(content: "Some answer", question: @question)
     end
 
     it "should have an answers attribute" do
@@ -48,6 +52,21 @@ describe Question do
     it "should destroy associated answers" do
       @question.destroy
       Answer.find_by_id(@answer.id).should be_nil
+    end
+  end
+
+  describe "project association" do
+    before(:each) do
+      @question = @user.questions.create!(@attr)
+    end
+
+    it "should have the project attribute" do
+      @question.should respond_to(:project)
+    end
+
+    it "should have the right associated project" do
+      @question.project_id.should == @project.id
+      @question.project.should    == @project
     end
   end
 end
