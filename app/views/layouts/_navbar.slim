@@ -5,15 +5,14 @@ div class="navbar navbar-inverse navbar-fixed-top"
 			    span class="icon-bar"
 			    span class="icon-bar"
 			    span class="icon-bar"
-			a class="brand" href="#"
-				= app_name			
+			= link_to app_name, root_path, :class => "brand"
 			div class="nav-collapse collapse"
 				- if user_signed_in?
 					ul class="nav"
-						li class="active"
+						li 
 							= link_to "Home", root_path
 						li 
-							= link_to "Projects", '#'
+							= link_to "Projects", projects_path
 						li 
 							= link_to "Favourite", '#'
 						li 

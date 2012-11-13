@@ -25,7 +25,7 @@ group :assets do
 
   gem 'twitter-bootstrap-rails'
   
-  gem 'slim'
+  gem 'slim-rails'
 end
 
 group :development do
