@@ -1,18 +1,9 @@
 h1 Listing projects
 
 table
-  tr
-    th
-    th
-    th
-
   - @projects.each do |project|
     tr
       td = link_to project.name, project
-      td = link_to 'Show', project, :class => "btn"
-      td = link_to 'Edit', edit_project_path(project), :class => "btn"
-      td = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete, :class => "btn"
-
 br
 
 = link_to 'New Project', new_project_path

@@ -1,9 +1,11 @@
-p#notice = notice
+/ p#notice = notice
 
 h2 = @project.name
+
 text_area readonly="readonly"
 	= @project.description
 br
-= link_to 'Edit', edit_project_path(@project)
-'|
-= link_to 'Back', projects_path
+= link_to 'Edit', edit_project_path(@project), :class => "btn"
+= link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete, :class => "btn"
+/ = link_to 'Back', projects_path
+
