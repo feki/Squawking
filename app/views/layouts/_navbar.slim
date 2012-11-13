@@ -8,16 +8,27 @@ div class="navbar navbar-inverse navbar-fixed-top"
 			a class="brand" href="#"
 				= app_name			
 			div class="nav-collapse collapse"
-				ul class="nav"
-					li class="active"
-						= link_to "Home", '#'
-					li 
-						= link_to "Projects", '#'
-					li 
-						= link_to "Favourite", '#'
-					li 
-						= link_to "Followed", '#'
-				form class="navbar-search"
-					input type="text" class="search-query" placeholder="Search"
-				p class="navbar-text pull-right"
-		  			| User
+				- if user_signed_in?
+					ul class="nav"
+						li class="active"
+							= link_to "Home", root_path
+						li 
+							= link_to "Projects", '#'
+						li 
+							= link_to "Favourite", '#'
+						li 
+							= link_to "Followed", '#'
+					form class="navbar-search"
+						input type="text" class="search-query" placeholder="Search"
+					ul class="nav pull-right"
+						li
+							= link_to current_user.email, edit_user_registration_path
+						li
+							= link_to "Sign out", destroy_user_session_path, :method => :delete
+				- else
+					ul class="nav"
+						li class="active"
+							= link_to "Home", root_path
+					ul class="nav pull-right"
+						li
+							= link_to "Sign in", new_user_session_path
