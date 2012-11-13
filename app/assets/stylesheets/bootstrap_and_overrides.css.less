@@ -1,6 +1,38 @@
 @import "twitter/bootstrap/bootstrap";
 body { 
-	padding-top: 60px;
+  padding-top: 60px;
+  background: #B2B2B2;
+}
+
+.round {
+  -moz-border-radius-topright: 10px;
+  -moz-border-radius-topleft: 10px;
+  -webkit-border-radius-topright: 10px;
+  -webkit-border-radius-topleft: 10px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  -webkit-border-radius-bottomright: 10px;
+  -webkit-border-radius-bottomleft: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px; 
+  background: #FFF;   
+} 
+
+.content {
+  /*padding: 5px;*/
+  margin: 10px; 
+}
+
+#error_explanation{
+  border-style: solid;
+  border-color: #CC0000;
+  border-width: 3px;
+}
+
+.field_with_errors label{
+  color: #CC0000;
 }
 
 @import "twitter/bootstrap/responsive";
@@ -30,27 +62,4 @@ body {
 //
 // Example:
 // @linkColor: #ff0000;
-
-.round {
-  -moz-border-radius-topright: 10px;
-  -moz-border-radius-topleft: 10px;
-  -webkit-border-radius-topright: 10px;
-  -webkit-border-radius-topleft: 10px;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  -moz-border-radius-bottomright: 10px;
-  -moz-border-radius-bottomleft: 10px;
-  -webkit-border-radius-bottomright: 10px;
-  -webkit-border-radius-bottomleft: 10px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px; 
-  background: #FFF;   
-} 
-
-.content {
-	/*padding: 5px;*/
-	margin: 10px;	
-}
-body{
-	background: #B2B2B2;
-}
+//@import "variables"
