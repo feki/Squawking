@@ -1,5 +1,6 @@
 RubyProject::Application.routes.draw do
   resources :projects
+  resources :articles
   
   devise_for :users
 
