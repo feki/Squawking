@@ -10,8 +10,8 @@ html
 		= csrf_meta_tags
 		meta name="viewport" content="width=device-width, initial-scale=1.0"
 	body
-		div class="container round"
+		div class="container"
 			= render 'layouts/navbar'
-			div class="content"		
+			div class="content round"		
 				= yield
         	= render 'layouts/footer'
