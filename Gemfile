@@ -20,18 +20,14 @@ group :assets do
   gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
-
-  gem 'less-rails'
-
-  gem 'twitter-bootstrap-rails'
-  
-  gem 'slim-rails'
+  gem 'less-rails', '2.2.3'
+  gem 'twitter-bootstrap-rails', '2.1.2'
+  gem 'slim-rails', '1.0.3'
 end
 
 group :development do
   gem 'rspec-rails', '2.10.1'
-
-  gem 'letter_opener'
+  gem 'letter_opener', '1.0.0'
 end
 
 
