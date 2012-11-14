@@ -13,6 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require_tree .
-//= require markitup
-//= require markitup-markdown
+//= require markItUp/markitup.js
+//= require markItUp/markitup-markdown
+
+$(document).ready(function () {
+  $(".markItUp").markItUp(mySettings);
+});
