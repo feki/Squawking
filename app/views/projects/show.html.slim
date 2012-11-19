@@ -1,11 +1,25 @@
 / p#notice = notice
-
 h2 = @project.name
 
-text_area readonly="readonly"
-	= @project.description
-br
-= link_to 'Edit', edit_project_path(@project), :class => "btn"
-= link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete, :class => "btn"
+div class="btn-group"
+	a class="btn dropdown-toggle" data-toggle="dropdown" href="#"
+		text Settings		
+		span class="caret"
+	ul class="dropdown-menu"
+		li
+			= link_to 'Edit', edit_project_path(@project)
+		li
+			= link_to 'Set leader', '#'
+			= link_to 'Set members', '#'
+		li
+			= link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete
+
+div class="row-fluid margin5"
+	div class="span2"
+		h4 Description
+	div class="span10 border_gray"
+		text_area readonly="readonly"
+			= @project.description
+
 / = link_to 'Back', projects_path
 
