@@ -1,9 +1,12 @@
 h1 Listing projects
 
-table
+= will_paginate
+
+ul class="projects"
   - @projects.each do |project|
-    tr
-      td = link_to project.name, project
-br
+    li 
+      = link_to project.name, project
+
+= will_paginate
 
 = link_to 'New Project', new_project_path
