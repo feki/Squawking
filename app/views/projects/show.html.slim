@@ -1,9 +1,7 @@
 / p#notice = notice
-h2 = @project.name
-
-div class="btn-group"
+div class="btn-group pull-right"
 	a class="btn dropdown-toggle" data-toggle="dropdown" href="#"
-		text Settings		
+		| Settings
 		span class="caret"
 	ul class="dropdown-menu"
 		li
@@ -14,10 +12,12 @@ div class="btn-group"
 		li
 			= link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete
 
-div class="row-fluid margin5"
+h2 = @project.name
+
+div class="row-fluid margin5 border_gray"
 	div class="span2"
 		h4 Description
-	div class="span10 border_gray"
+	div class="span10"
 		text_area readonly="readonly"
 			= @project.description
 
