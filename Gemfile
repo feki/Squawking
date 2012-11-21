@@ -10,6 +10,13 @@ gem 'sqlite3'
 # Gem used for user authentication.
 gem 'devise', '2.1.2'
 
+gem 'slim-rails'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
+
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -20,9 +27,6 @@ group :assets do
   gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
-  gem 'less-rails', '2.2.3'
-  gem 'twitter-bootstrap-rails', '2.1.2'
-  gem 'slim-rails', '1.0.3'
 end
 
 group :development do

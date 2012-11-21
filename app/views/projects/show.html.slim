@@ -1,17 +1,50 @@
-p#notice = notice
+/ <<<<<<< HEAD
+/ p#notice = notice
 
-.row-fluid
-  .span10
-    .project-details.row-fluid
-      h2 = @project.name
-      text_area readonly="readonly"
-        = @project.description
-    .row-fluid
-      .span5
-        = render 'articles/index'
-  .span2
-    = link_to 'Add new article', new_article_path(project_id: @project.id)
+/ .row-fluid
+/   .span10
+/     .project-details.row-fluid
+/       h2 = @project.name
+/       text_area readonly="readonly"
+/         = @project.description
+/     .row-fluid
+/       .span5
+/         = render 'articles/index'
+/   .span2
+/     = link_to 'Add new article', new_article_path(project_id: @project.id)
 
-=' link_to 'Edit', edit_project_path(@project)
-' |
-= link_to 'Back', projects_path
+/ =' link_to 'Edit', edit_project_path(@project)
+/ ' |
+/ = link_to 'Back', projects_path
+/ =======
+/ p#notice = notice
+div class="content"
+	div class="btn-group pull-right"
+		a class="btn dropdown-toggle" data-toggle="dropdown" href="#"
+			| Settings
+			span class="caret"
+		ul class="dropdown-menu"
+			li
+				= link_to 'Edit', edit_project_path(@project)
+			li
+				= link_to 'Set leader', '#'
+				= link_to 'Set members', '#'
+			li
+				= link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete
+
+	h2 = @project.name
+
+	div class="row-fluid margin5 border_gray"
+		div class="span2"
+			h4 Description
+		div class="span10"
+			text_area readonly="readonly"
+				= @project.description
+
+div class="row-fluid"
+	div class="span6 content_bubble"
+		h4 Articles
+	div class="span6 content_bubble"
+		h4 Questions
+
+/ >>>>>>> origin/master
