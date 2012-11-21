@@ -1,9 +1,17 @@
 p#notice = notice
 
-h2 = @project.name
-text_area readonly="readonly"
-	= @project.description
-br
-= link_to 'Edit', edit_project_path(@project)
-'|
+.row-fluid
+  .span10
+    .project-details.row-fluid
+      h2 = @project.name
+      text_area readonly="readonly"
+        = @project.description
+    .row-fluid
+      .span5
+        = render 'articles/index'
+  .span2
+    = link_to 'Add new article', new_article_path(project_id: @project.id)
+
+=' link_to 'Edit', edit_project_path(@project)
+' |
 = link_to 'Back', projects_path

@@ -2,6 +2,7 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
+    # @articles = Article.find_all_by_project_id(params[:project_id])
     @articles = Article.all
 
     respond_to do |format|
@@ -26,6 +27,8 @@ class ArticlesController < ApplicationController
   def new
     @article = Article.new
 
+    @project_id = params[:project_id]
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @article }
@@ -40,7 +43,9 @@ class ArticlesController < ApplicationController
   # POST /articles
   # POST /articles.json
   def create
-    @article = Article.new(params[:article])
+    params[:article][:project] = Project.find(params[:article][:project_id])
+    params[:article].delete :project_id
+    @article = current_user.articles.new(params[:article])
 
     respond_to do |format|
       if @article.save

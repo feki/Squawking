@@ -1,5 +1,10 @@
 p#notice = notice
 
+.row-fluid
+  .project-details.span6
+    h2 = @article.title
+    text_area readonly="readonly"
+      = @article.content
 
 = link_to 'Edit', edit_article_path(@article)
 '|
