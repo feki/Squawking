@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Question do
   before(:each) do
     @user = FactoryGirl.create(:user)
-    @attr = { content: "Some question", project: FactoryGirl.create(:project) }
+    @attr = { title: "Question?", content: "Some question", project: FactoryGirl.create(:project) }
   end
 
   describe "validations" do
@@ -17,6 +17,10 @@ describe Question do
 
     it "should require a project id" do
       @user.questions.build(@attr.merge(project: nil)).should_not be_valid
+    end
+
+    it "should require a nonblack title" do
+      @user.questions.build(@attr.merge(title: "    ")).should_not be_valid
     end
   end
 

@@ -19,6 +19,7 @@ FactoryGirl.define do
 
   factory :question do |question|
     content     "Some question"
+    title       "Some title"
     association :user
     association :project
   end

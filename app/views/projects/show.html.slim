@@ -1,5 +1,5 @@
-/ p#notice = notice
 div class="content"
+	p#notice = notice
 	div class="btn-group pull-right"
 		a class="btn dropdown-toggle" data-toggle="dropdown" href="#"
 			| Settings
@@ -27,4 +27,6 @@ div class="row-fluid"
 		h4 Articles
 	div class="span6 content_bubble"
 		h4 Questions
+		= link_to 'Add', new_question_path(project_id: @project.id), :class => "btn"
+		= render "questions/index"
 
