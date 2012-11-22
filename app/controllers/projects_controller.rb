@@ -16,6 +16,7 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @questions = @project.questions
+    @articles = Article.find_all_by_project_id(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @project }

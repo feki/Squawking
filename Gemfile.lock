@@ -210,16 +210,16 @@ DEPENDENCIES
   email_spec (= 1.2.1)
   factory_girl_rails (= 4.1.0)
   jquery-rails
-  less-rails
-  letter_opener
+  less-rails (= 2.2.3)
+  letter_opener (= 1.0.0)
   rails (= 3.2.6)
   rspec (= 2.10.0)
   rspec-rails (= 2.10.1)
   sass-rails (~> 3.2.3)
-  slim-rails
+  slim-rails (= 1.0.3)
   sqlite3
   therubyracer
-  twitter-bootstrap-rails
+  twitter-bootstrap-rails (= 2.1.2)
   uglifier (>= 1.0.3)
   webrat (= 0.7.3)
   will_paginate

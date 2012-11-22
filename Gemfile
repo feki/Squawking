@@ -26,13 +26,12 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
 
-  gem 'uglifier', '>= 1.0.3'  
+  gem 'uglifier', '>= 1.0.3'
 end
 
 group :development do
   gem 'rspec-rails', '2.10.1'
-
-  gem 'letter_opener'
+  gem 'letter_opener', '1.0.0'
 end
 
 
