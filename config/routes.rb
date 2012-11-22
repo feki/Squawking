@@ -1,10 +1,7 @@
 RubyProject::Application.routes.draw do
   resources :projects
-<<<<<<< HEAD
   resources :questions
-=======
   resources :articles
->>>>>>> a97016348fe7e368e53bdd0899b4be120fae73bc
   
   devise_for :users
 

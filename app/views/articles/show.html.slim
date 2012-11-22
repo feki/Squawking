@@ -1,11 +1,11 @@
-p#notice = notice
+.content
+ 	p#notice = notice
+ 	.btn-group
+ 		= link_to 'Back to project', @article.project, class: "btn"
+ 		= link_to 'Edit', edit_article_path(@article), class: "btn" 		
+ 		= link_to 'Delete', @article, confirm: 'Are you sure?', method: :delete, class: "btn"
 
-.row-fluid
-  .project-details.span6
-    h2 = @article.title
-    text_area readonly="readonly"
-      = @article.content
-
-= link_to 'Edit', edit_article_path(@article)
-'|
-= link_to 'Back', articles_path
+ 	h2 = @article.title
+ 	
+ 	text_area readonly="readonly"
+		= @article.content

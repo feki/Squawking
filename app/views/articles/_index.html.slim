@@ -1,13 +1,6 @@
-table
-  tr
-    th
-    th
-    th
-
+table class="table"
+  tbody   
   - @articles.each do |article|
     tr
-      td = link_to article.title, article
-      td = link_to 'Show', article
-      td = link_to 'Edit', edit_article_path(article)
-      td = link_to 'Destroy', article, data: { confirm: 'Are you sure?' }, :method => :delete
-      
+      td
+        = link_to article.title, article

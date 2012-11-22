@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-=======
-/ <<<<<<< HEAD
-/ p#notice = notice
-
-/ .row-fluid
-/   .span10
-/     .project-details.row-fluid
-/       h2 = @project.name
-/       text_area readonly="readonly"
-/         = @project.description
-/     .row-fluid
-/       .span5
-/         = render 'articles/index'
-/   .span2
-/     = link_to 'Add new article', new_article_path(project_id: @project.id)
-
-/ =' link_to 'Edit', edit_project_path(@project)
-/ ' |
-/ = link_to 'Back', projects_path
-/ =======
-/ p#notice = notice
->>>>>>> a97016348fe7e368e53bdd0899b4be120fae73bc
 div class="content"
 	p#notice = notice
 	div class="btn-group pull-right"
@@ -48,9 +25,9 @@ div class="content"
 div class="row-fluid"
 	div class="span6 content_bubble"
 		h4 Articles
+		= link_to 'Add', new_article_path(project_id: @project.id), :class => "btn"
+		= render 'articles/index'
 	div class="span6 content_bubble"
 		h4 Questions
 		= link_to 'Add', new_question_path(project_id: @project.id), :class => "btn"
 		= render "questions/index"
-
-/ >>>>>>> origin/master
