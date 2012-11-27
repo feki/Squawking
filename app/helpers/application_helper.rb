@@ -1,3 +1,7 @@
+require 'net/http'
+require 'uri'
+require 'nokogiri'
+
 module ApplicationHelper
   def app_name
     "SquawKING"
@@ -21,5 +25,22 @@ module ApplicationHelper
     end
     md = Redcarpet::Markdown.new(rndr, options)
     raw md.render(text)
+
+    raw Redcarpet::Render::SmartyPants.render(highlight_syntax(md.render(text)).to_s)
+  end
+
+  PYGMENTS_URI = 'http://pygments.appspot.com/'
+
+  def highlight_syntax(html)
+
+    doc = Nokogiri::HTML(html)
+    doc.search("pre > code[class]").each do |code|
+      request = Net::HTTP.post_form(URI.parse(PYGMENTS_URI), 
+                  { 'lang' => code[:class],
+                    'code' => code.text.rstrip })
+      code.parent.replace request.body
+    end
+
+    doc.search("//body").children.to_s
   end
 end

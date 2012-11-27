@@ -12,4 +12,5 @@
  *= require bootstrap_and_overrides
  *= require markItUp/markitup
  *= require markItUp/markitup-markdown
+ *= require highlight
  */
