@@ -25,8 +25,8 @@ class ArticlesController < ApplicationController
     end
   end
 
-  # GET /projects/:id/articles/new
-  # GET /projects/:id/articles/new.json
+  # GET /project/:id/articles/new
+  # GET /project/:id/articles/new.json
   def new
     @article = Article.new
 
