@@ -21,11 +21,12 @@ class QuestionsController < ApplicationController
     end
   end
 
-  # GET /questions/new
-  # GET /questions/new.json
+  # GET project/:id/questions/new
+  # GET project/:id/questions/new.json
   def new
     @question = Question.new
-    @project = Project.find(params[:project_id])
+    @project = Project.find(params[:id])
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @question }

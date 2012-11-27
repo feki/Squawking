@@ -23,7 +23,7 @@
           li
             = link_to 'Add new article', new_article_of_project_path(@project)
           li
-            = link_to 'Add new question', new_question_path(project_id: @project.id)
+            = link_to 'Add new question', new_question_of_project_path(@project)
       h2 = @project.name
       .margin5.border_gray
           h4 Description

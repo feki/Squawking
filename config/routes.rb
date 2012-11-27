@@ -13,6 +13,9 @@ RubyProject::Application.routes.draw do
     member do
       # new article can be created only with associated project
       get '/articles/new', as: 'new_article_of', to: 'articles#new'
+
+      # new question can be created only with associated project
+      get 'questions/new', as: 'new_question_of', to: 'questions#new'
     end
   end
 
