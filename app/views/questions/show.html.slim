@@ -1,11 +1,11 @@
 .content
- 	p#notice = notice
- 	.btn-group
- 		= link_to 'Back to project', @question.project, class: "btn"
- 		= link_to 'Edit', edit_question_path(@question), class: "btn" 		
- 		= link_to 'Delete', @question, confirm: 'Are you sure?', method: :delete, class: "btn"
+  p#notice = notice
+  .btn-group
+    = link_to 'Back to project', @question.project, class: "btn"
+    = link_to 'Edit', edit_question_path(@question), class: "btn"
+    = link_to 'Delete', @question, confirm: 'Are you sure?', method: :delete, class: "btn"
 
- 	h2 = @question.title
- 	
- 	text_area readonly="readonly"
-		= @question.content
+  h2 = @question.title
+
+  .markdown-readonly
+    = markdown(@question.content)

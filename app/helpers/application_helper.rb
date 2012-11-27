@@ -12,4 +12,14 @@ module ApplicationHelper
       "#{base_title} | #{@title}"
     end
   end
+
+  def markdown(text)
+    rndr = Redcarpet::Render::HTML.new(hard_wrap: true, filter_html: true)
+    options = [:no_intra_emphasis, :fenced_code_blocks, :autolink].inject({}) do |mem, var|
+      mem[var] = true
+      mem
+    end
+    md = Redcarpet::Markdown.new(rndr, options)
+    raw md.render(text)
+  end
 end

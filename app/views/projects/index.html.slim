@@ -1,20 +1,19 @@
-div class="content"
-	h1 Projects
-	= link_to 'New Project', new_project_path, class: "btn"
+h1 Projects
+= link_to 'New Project', new_project_path, class: "btn"
 
-	= will_paginate
+= will_paginate
 
-	table class="projects table"
-	  thead
-		tr
-		  th Name
-		  th Description
-	  tbody	  
- 	  - @projects.each do |project|
-        tr
-          td
+table class="projects table"
+  thead
+	tr
+	  th Name
+	  th Description
+  tbody	  
+  - @projects.each do |project|
+      tr
+        td
          	= link_to project.name, project
-          td
-          	= project.description[0..100] + "..."
+        td
+         	= project.description[0..100] + "..."
 
-	= will_paginate
+= will_paginate

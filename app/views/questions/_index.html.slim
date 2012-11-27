@@ -1,6 +1,6 @@
-table class="table"
+table.table
   tbody	  
-  - @questions.each do |question|
-	tr
-	  td
+  - questions.each do |question|
+    tr
+      td
         = link_to question.title, question

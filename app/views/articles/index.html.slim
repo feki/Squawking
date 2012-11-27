@@ -1,4 +1,4 @@
 .content
-	h1 Listing articles
+  h1 Listing articles
 
-	= render 'index'
+  = render partial: 'index', locals: { articles: @articles }

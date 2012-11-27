@@ -16,6 +16,9 @@ gem 'twitter-bootstrap-rails'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 
+# Markdown processing library
+gem 'redcarpet', '~> 2.2.2'
+
 
 # Gems used only for assets and not required
 # in production environments by default.

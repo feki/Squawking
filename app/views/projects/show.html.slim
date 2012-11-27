@@ -1,33 +1,38 @@
-div class="content"
-	p#notice = notice
-	div class="btn-group pull-right"
-		a class="btn dropdown-toggle" data-toggle="dropdown" href="#"
-			| Settings
-			span class="caret"
-		ul class="dropdown-menu"
-			li
-				= link_to 'Edit', edit_project_path(@project)
-			li
-				= link_to 'Set leader', '#'
-				= link_to 'Set members', '#'
-			li
-				= link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete
-
-	h2 = @project.name
-
-	div class="row-fluid margin5 border_gray"
-		div class="span2"
-			h4 Description
-		div class="span10"
-			text_area readonly="readonly"
-				= @project.description
-
-div class="row-fluid"
-	div class="span6 content_bubble"
-		h4 Articles
-		= link_to 'Add', new_article_path(project_id: @project.id), :class => "btn"
-		= render 'articles/index'
-	div class="span6 content_bubble"
-		h4 Questions
-		= link_to 'Add', new_question_path(project_id: @project.id), :class => "btn"
-		= render "questions/index"
+.row-fluid
+  .span12
+    .row-fluid
+      /.notice = notice
+      p#notice = notice
+      .btn-group.pull-right
+        a.btn.dropdown-toggle data-toggle="dropdown" href="#"
+          | Settings
+          span class="caret"
+        ul class="dropdown-menu"
+          li
+            = link_to 'Edit', edit_project_path(@project)
+          li
+            = link_to 'Set leader', '#'
+            = link_to 'Set members', '#'
+          li
+            = link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete
+      .btn-group.pull-right
+        button.btn.btn-primary.dropdown-toggle data-toggle="dropdown"
+          | Actions
+          span.caret
+        ul.dropdown-menu
+          li
+            = link_to 'Add new article', new_article_path(project_id: @project.id)
+          li
+            = link_to 'Add new question', new_question_path(project_id: @project.id)
+      h2 = @project.name
+      .margin5.border_gray
+          h4 Description
+          text_area readonly="readonly"
+            = @project.description
+    .row-fluid
+      .span6.content_bubble
+        h4 Article posts
+        = render partial: 'articles/index', locals: { articles: @project.articles }
+      .span6.content_bubble
+        h4 Question posts
+        = render partial: 'questions/index', locals: { questions: @project.questions }

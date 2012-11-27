@@ -1,6 +1,6 @@
-table class="table"
-  tbody   
-  - @articles.each do |article|
-    tr
-      td
-        = link_to article.title, article
+table.table
+  tbody
+    - articles.each do |article|
+      tr
+        td
+          = link_to article.title, article

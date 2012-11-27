@@ -1,15 +1,23 @@
-= form_for @question do |f|
+= form_for @question, html: { class: "form-horizontal" } do |f|
   - if @question.errors.any?
     #error_explanation
       h2 = "#{pluralize(@question.errors.count, "error")} prohibited this question from being saved:"
       ul
         - @question.errors.full_messages.each do |message|
           li = message
+
   = f.hidden_field(:project_id, value: @project.id)
-  div class="field"
-  	= f.label :title
-  	= f.text_field :title
-  div class="area"
-  	= f.label :content
-  	= f.text_area :content
-  .actions = f.submit 'Save'
+
+  .control-group
+    = f.label :title, class: "control-label"
+    .controls
+      = f.text_field :title
+
+  .control-group
+    = f.label :content, class: "control-label"
+    .controls
+      = f.text_area :content, class: "markItUp"
+
+  .control-group
+    controls
+      = f.submit 'Save'
