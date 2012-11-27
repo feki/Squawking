@@ -1,17 +1,28 @@
 RubyProject::Application.routes.draw do
-  resources :projects
-  resources :questions
-  resources :articles
   
-  devise_for :users
+  # You can have the root of your site routed with "root"
+  # just remember to delete public/index.html.
+  root :to => 'pages#welcome'
 
   match 'welcome', :to => 'pages#welcome'
   match 'home', :to => 'pages#home'
 
+  devise_for :users
+
+  resources :projects do
+    member do
+      # new article can be created only with associated project
+      get '/articles/new', as: 'new_article_of', to: 'articles#new'
+    end
+  end
+
+  resources :questions
+  resources :articles, except: :new
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
-  # Sample of regular route:
+  # Sample of regular route:he preview action of PhotosController
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
 
@@ -54,10 +65,6 @@ RubyProject::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  root :to => 'pages#welcome'
 
   # See how all your routes lay out with "rake routes"
 

@@ -2,8 +2,11 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.find_all_by_project_id(params[:project_id])
-    # @articles = Article.all
+    @articles = if params[:project_id]
+      Article.find_all_by_project_id(params[:project_id])
+    else
+      @articles = Article.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -22,12 +25,12 @@ class ArticlesController < ApplicationController
     end
   end
 
-  # GET /articles/new
-  # GET /articles/new.json
+  # GET /projects/:id/articles/new
+  # GET /projects/:id/articles/new.json
   def new
     @article = Article.new
 
-    @project_id = params[:project_id]
+    @project_id = params[:id]
 
     respond_to do |format|
       format.html # new.html.erb
