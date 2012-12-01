@@ -24,7 +24,6 @@ module ApplicationHelper
       mem
     end
     md = Redcarpet::Markdown.new(rndr, options)
-    raw md.render(text)
 
     raw Redcarpet::Render::SmartyPants.render(highlight_syntax(md.render(text)).to_s)
   end

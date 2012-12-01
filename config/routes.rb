@@ -19,7 +19,7 @@ RubyProject::Application.routes.draw do
     end
   end
 
-  resources :questions
+  resources :questions, except: :new
   resources :articles, except: :new
 
   # The priority is based upon order of creation:
