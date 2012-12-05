@@ -1,0 +1,18 @@
+= form_for reaction, remote: true, html: { id: "create_reaction_form", class: "form-horizontal" } do |f|
+  - if reaction.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@reaction.errors.count, "error")} prohibited this reaction from being saved:"
+      ul
+        - reaction.errors.full_messages.each do |message|
+          li = message
+
+  = f.hidden_field(:article_id, value: article.id)
+
+  .control-group
+    .controls
+      = f.text_area :content, class: "markItUp"
+
+  .control-group
+    .controls
+      = f.submit
+      / 'Save'

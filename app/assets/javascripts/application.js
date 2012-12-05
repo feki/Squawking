@@ -16,6 +16,7 @@
 //= require bootstrap
 //= require markItUp/markitup.js
 //= require markItUp/markitup-markdown
+//= require reactions/reactions
 
 $(document).ready(function () {
   $(".markItUp").markItUp(mySettings);

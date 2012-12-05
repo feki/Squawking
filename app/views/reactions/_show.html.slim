@@ -1,0 +1,8 @@
+.reaction.span12 id="reaction#{reaction.id}"
+  / .notice
+  /   = notice
+  .readonly-content
+    .reaction-content
+      = markdown(reaction.content)
+    hr
+    = link_to "Delete reaction", reaction, confirm: "Are you sure?", method: :delete, :"data-action" => "delete-reaction", remote: true
