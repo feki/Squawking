@@ -1,6 +1,9 @@
 table.table
+  thead
+		tr
+		  th Title
   tbody	  
-  - questions.each do |question|
-    tr
-      td
-        = link_to question.title, question
+	  - questions.each do |question|
+	    tr
+	      td
+	        = link_to question.title, question

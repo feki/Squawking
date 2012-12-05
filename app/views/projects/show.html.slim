@@ -1,38 +1,40 @@
 .row-fluid
   .span12
-    .row-fluid
-      /.notice = notice
-      p#notice = notice
-      .btn-group.pull-right
-        a.btn.dropdown-toggle data-toggle="dropdown" href="#"
-          | Settings
-          span class="caret"
-        ul class="dropdown-menu"
-          li
-            = link_to 'Edit', edit_project_path(@project)
-          li
-            = link_to 'Set leader', '#'
-            = link_to 'Set members', '#'
-          li
-            = link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete
-      .btn-group.pull-right
-        button.btn.btn-primary.dropdown-toggle data-toggle="dropdown"
-          | Actions
-          span.caret
-        ul.dropdown-menu
-          li
-            = link_to 'Add new article', new_article_of_project_path(@project)
-          li
-            = link_to 'Add new question', new_question_of_project_path(@project)
-      h2 = @project.name
-      .margin5.border_gray
-          h4 Description
-          text_area readonly="readonly"
-            = @project.description
-    .row-fluid
-      .span6.content_bubble
-        h4 Article posts
-        = render partial: 'articles/index', locals: { articles: @project.articles }
-      .span6.content_bubble
-        h4 Question posts
-        = render partial: 'questions/index', locals: { questions: @project.questions }
+    p#notice = notice
+    .btn-group.pull-right
+      a.btn.btn-inverse.dropdown-toggle data-toggle="dropdown" href="#"
+        | Options
+        span.caret
+      ul.dropdown-menu
+        li
+          = link_to 'Add new article', new_article_of_project_path(@project)
+        li
+          = link_to 'Add new question', new_question_of_project_path(@project)
+        li.divider
+        li
+          = link_to 'Edit', edit_project_path(@project)
+        li
+          = link_to 'Set leader', '#'
+          = link_to 'Set members', '#'
+        li
+          = link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete    
+    h2 = @project.name
+    .tabbable
+      ul.nav.nav-tabs
+        li.active
+          a href="#description" data-toggle="tab"
+            | Description
+        li
+          a href="#articles" data-toggle="tab"
+            | Articles
+        li
+          a href="#questions" data-toggle="tab"
+            | Questions
+      .tab-content
+        .tab-pane.active id="description"
+          .markdown-readonly
+            = markdown(@project.description)
+        .tab-pane id="articles"
+          = render partial: 'articles/index', locals: { articles: @project.articles }
+        .tab-pane id="questions"
+          = render partial: 'questions/index', locals: { questions: @project.questions }

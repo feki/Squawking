@@ -1,0 +1,5 @@
+<% content = render partial: 'form', locals: {answer: @answer} %>	
+var answer_div = $('div#<%= @answer.id%>');
+answer_div.children('.row-fluid').hide();
+answer_div.find("hr").before("<%= escape_javascript(content) %>");
+answer_div.find(".markItUp").markItUp(mySettings);

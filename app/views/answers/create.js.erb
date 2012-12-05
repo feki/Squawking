@@ -1,0 +1,17 @@
+<% if @answer.errors.any? %>
+  if(document.getElementById('error_explanation')){
+    $('#error_explanation ul').empty();
+  } else {
+    var create_answer = $('#create_answer');
+    create_answer.prepend('<div id="error_explanation"><ul></ul></div>');
+  }
+  var errors = $('#error_explanation ul');
+  <% @answer.errors.full_messages.each do |error| %>
+    errors.append('<li><%= escape_javascript( error ) %></li>');
+  <% end %>
+<% else %>
+  <% content = render @answer%>	
+  $('.answers').append("<%= escape_javascript(content) %>");
+  $('#error_explanation').remove();
+  $('#answer_content').val('');
+<% end %>
