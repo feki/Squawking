@@ -1,0 +1,15 @@
+= form_for @answer, remote: true, html: {id: 'create_answer'} do |f|
+  - if @answer.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@answer.errors.count, "error")} prohibited this answer from being saved:"
+      ul
+        - @answer.errors.full_messages.each do |message|
+          li = message
+  = f.hidden_field(:question_id, value: @question_id)
+
+  .control-group
+    / = f.label :content, class: "control-label"
+    .controls
+      = f.text_area :content, class: "markItUp"
+
+  .actions = f.submit 'Save'

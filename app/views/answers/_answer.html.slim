@@ -1,0 +1,9 @@
+div.row-fluid id=answer.id
+	div.row-fluid
+		.markdown-readonly
+		  	= markdown(answer.content)
+	    div.pull-right
+	      	= "#{answer.user.email}: #{time_ago_in_words(answer.created_at)}"
+	      	= link_to 'Edit', edit_answer_path(answer), remote: true, class: "btn"
+	      	= link_to 'Delete', answer, confirm: 'Are you sure?', method: :delete, remote: true, class: "btn"
+	hr.custom

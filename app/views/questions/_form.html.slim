@@ -1,4 +1,5 @@
 = form_for @question, html: { class: "form-horizontal" } do |f|
+
   - if @question.errors.any?
     #error_explanation
       h2 = "#{pluralize(@question.errors.count, "error")} prohibited this question from being saved:"
@@ -19,5 +20,5 @@
       = f.text_area :content, class: "markItUp"
 
   .control-group
-    controls
+    .controls
       = f.submit 'Save'

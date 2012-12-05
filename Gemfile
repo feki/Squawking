@@ -5,16 +5,16 @@ gem 'rails', '3.2.6'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'sqlite3', '1.3.6'
 
 # Gem used for user authentication.
 gem 'devise', '2.1.2'
 
-gem 'slim-rails'
-gem 'less-rails'
-gem 'twitter-bootstrap-rails'
-gem 'will_paginate'
-gem 'bootstrap-will_paginate'
+gem 'slim-rails', '1.0.3'
+gem 'less-rails', '2.2.3'
+gem 'twitter-bootstrap-rails', '2.1.2'
+gem 'will_paginate', '3.0.3'
+gem 'bootstrap-will_paginate', '0.0.9'
 
 # Markdown processing library
 gem 'redcarpet', '~> 2.2.2'
@@ -48,7 +48,7 @@ group :test do
   gem 'factory_girl_rails', '4.1.0'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '2.1.3'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
