@@ -10,8 +10,9 @@
   .markdown-readonly
     = markdown(@question.content)
 
-  hr.thick
-  = render partial: 'answers/index', locals: { answers: @answers }
+  / hr.thick
 
+= render partial: 'answers/index', locals: { answers: @answers }
+.content_bubble
   h4 New Answer
   = render partial: 'answers/form', locals: { answer: @answer }
