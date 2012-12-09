@@ -1,8 +1,11 @@
-.reaction.span12 id="reaction#{reaction.id}"
-  / .notice
-  /   = notice
-  .readonly-content
+.row-fluid
+  .reaction.span12 id="reaction#{reaction.id}"
+    / .notice
+    /   = notice
     .reaction-content
       = markdown(reaction.content)
     hr
-    = link_to "Delete reaction", reaction, confirm: "Are you sure?", method: :delete, :"data-action" => "delete-reaction", remote: true
+    =' link_to "Delete reaction", reaction, confirm: "Are you sure?", method: :delete, :"data-action" => "delete-reaction", remote: true, class: "pull-right btn btn-link"
+    =' link_to "Edit reaction", reaction, method: :put, remote: true, class: "pull-right btn btn-link"
+    .pull-right
+      | created by #{reaction.user.email}: #{time_ago_in_words(reaction.created_at)}

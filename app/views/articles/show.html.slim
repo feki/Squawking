@@ -20,7 +20,11 @@
         hr
         .article-content.row-fluid
           = markdown(@article.content)
-    .reactions.row-fluid#reactions
-      == render partial: "reactions/index", locals: { reactions: @article.reactions }
+        .row-fluid
+          .reactions.readonly-content#reactions
+            h3 Reactions
+            == render partial: "reactions/index", locals: { reactions: @article.reactions }
     .new-reaction.row-fluid#new-reaction
+      button class="btn btn-link pull-right" id="new_reaction_button"
+        | New reaction
       == render partial: "reactions/form", locals: { reaction: @article.reactions.build, article: @article }

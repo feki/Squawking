@@ -6,7 +6,7 @@
         - reaction.errors.full_messages.each do |message|
           li = message
 
-  = f.hidden_field(:article_id, value: article.id)
+  = f.hidden_field(:article_id, value: reaction.article_id)
 
   .control-group
     .controls
