@@ -1,3 +1,10 @@
+# attach click event listener to 'New reaction' button
+jQuery ->
+  $("#new_reaction_button")
+    .click((evnObj) ->
+      $("#create_reaction_form").slideToggle();
+    );
+
 # creating reaction ajax events
 jQuery ->
   $("#create_reaction_form")
