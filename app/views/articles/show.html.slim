@@ -13,7 +13,7 @@
                 li
                   = link_to 'Edit', edit_article_path(@article)
                 li
-                  = link_to 'Delete', @article, confirm: 'Are you sure?', method: :delete
+                  = link_to 'Delete', @article, data: { confirm: 'Are you sure?' }, method: :delete
                 li
                   = link_to 'Back to project', @article.project
           h2 = @article.title

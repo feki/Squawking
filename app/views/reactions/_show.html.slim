@@ -7,5 +7,5 @@
     hr
     =' link_to "Delete reaction", reaction, confirm: "Are you sure?", method: :delete, :"data-action" => "delete-reaction", remote: true, class: "pull-right btn btn-link"
     =' link_to "Edit reaction", reaction, method: :put, remote: true, class: "pull-right btn btn-link"
-    .pull-right
-      | created by #{reaction.user.email}: #{time_ago_in_words(reaction.created_at)}
+    .pull-left.created-info
+      | created by #{link_to reaction.user.email, "#reaction.user", class: "btn btn-link"}: #{time_ago_in_words(reaction.created_at)}
