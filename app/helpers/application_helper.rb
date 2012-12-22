@@ -25,7 +25,8 @@ module ApplicationHelper
     end
     md = Redcarpet::Markdown.new(rndr, options)
 
-    raw Redcarpet::Render::SmartyPants.render(highlight_syntax(md.render(text)).to_s)
+    #raw Redcarpet::Render::SmartyPants.render(highlight_syntax(md.render(text)).to_s)
+    Redcarpet::Render::SmartyPants.render(highlight_syntax(md.render(text)).to_s).html_safe
   end
 
   PYGMENTS_URI = 'http://pygments.appspot.com/'

@@ -19,14 +19,16 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe ArticlesController do
-  # render_views
 
-  # before(:each) do
-  #   @project = FactoryGirl.create(:project)
-  #   @user = FactoryGirl.create(:user)
-  #   @user.confirm!
-  #   sign_in(@user)
-  # end
+  include ApplicationHelper
+
+  render_views
+
+  before(:each) do
+    @project = FactoryGirl.create(:project)
+    @user = FactoryGirl.create(:user)
+    #sign_in(@user)
+  end
 
   # after(:all) do
   #   @project.destroy
@@ -36,9 +38,9 @@ describe ArticlesController do
   # This should return the minimal set of attributes required to create a valid
   # Article. As you add validations to Article, be sure to
   # update the return value of this method accordingly.
-  # def valid_attributes
-  #   { title: "title", content: "con", project: @project }
-  # end
+  def valid_attributes
+    { title: "title", content: "con", project: @project }
+  end
   
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -47,133 +49,210 @@ describe ArticlesController do
   #   {}
   # end
 
-  # describe "GET index" do
-  #   it "assigns all articles as @articles" do
-  #     article = @user.articles.create! valid_attributes
-  #     get :index, project_id: @project.id
-  #     assigns(:articles).should eq([article])
-  #   end
-  # end
+  describe "GET index" do
+    it "should be success" do
+      get :index
+      response.should be_success
+    end
 
-  # describe "GET show" do
-  #   it "assigns the requested article as @article" do
-  #     article = @user.articles.create! valid_attributes
-  #     get :show, { :id => article.id }, valid_session
-  #     assigns(:article).should eq(article)
-  #   end
-  # end
+    it "should have the right title" do
+      get :index
+      response.should have_selector("title", content: "Articles")
+    end
+    
+    it "should assigns all articles associated with project as @articles" do
+      article = @user.articles.create! valid_attributes
+      get :index, project_id: @project.id
+      assigns(:articles).should eq([article])
+    end
 
-  # describe "GET new" do
-  #   it "assigns a new article as @article" do
-  #     get :new, { project_id: @project.id }, valid_session
-  #     assigns(:article).should be_a_new(Article)
-  #   end
-  # end
+    it "should assigns all articles as @articles" do
+      article1 = @user.articles.create! valid_attributes
+      other_user = FactoryGirl.create(:user, email: "some.mail@domain.com")
+      article2 = other_user.articles.create! valid_attributes
+      get :index
+      assigns(:articles).should eq([article1, article2])
+    end
+  end
 
-  # describe "GET edit" do
-  #   it "assigns the requested article as @article" do
-  #     article = @user.articles.create! valid_attributes
-  #     get :edit, { :id => article.to_param }, valid_session
-  #     assigns(:article).should eq(article)
-  #   end
-  # end
+  describe "GET show" do
+    before(:each) do
+      @article = @user.articles.create! valid_attributes
+      get :show, id: @article.id
+    end
+    
+    it "should be success" do
+      response.should be_success
+    end
 
-  # describe "POST create" do
+    it "should assigns the requested article as @article" do
+      assigns(:article).should eq(@article)
+    end
 
-  #   describe "with valid params" do
-  #     it "creates a new Article" do
-  #       expect {
-  #         post :create, { article: valid_attributes }, valid_session
-  #       }.to change(Article, :count).by(1)
-  #     end
+    it "should have the right title" do
+      response.should have_selector("title", content: "Article: #{@article.title}")
+    end
 
-  #     it "assigns a newly created article as @article" do
-  #       post :create, {:article => valid_attributes}, valid_session
-  #       assigns(:article).should be_a(Article)
-  #       assigns(:article).should be_persisted
-  #     end
+    it "should have the right article title" do
+      response.should have_selector(".article-title > h2", content: @article.title)
+    end
 
-  #     it "redirects to the created article" do
-  #       post :create, {:article => valid_attributes}, valid_session
-  #       response.should redirect_to(Article.last)
-  #     end
-  #   end
+    it "should have the right article content" do
+      response.should have_selector(".article-content", content: @article.content)
+      response.should have_selector(".article-content", content: @article.content)
+    end
 
-  #   describe "with invalid params" do
-  #     it "assigns a newly created but unsaved article as @article" do
-  #       # Trigger the behavior that occurs when invalid params are submitted
-  #       Article.any_instance.stub(:save).and_return(false)
-  #       post :create, { :article => {} }, valid_session
-  #       assigns(:article).should be_a_new(Article)
-  #     end
+    it "should have the link to edit article" do
+      response.should have_selector("a", href: edit_article_path(@article))
+    end
 
-  #     it "re-renders the 'new' template" do
-  #       # Trigger the behavior that occurs when invalid params are submitted
-  #       Article.any_instance.stub(:save).and_return(false)
-  #       post :create, {:article => {}}, valid_session
-  #       response.should render_template("new")
-  #     end
-  #   end
-  # end
+    it "should have the link to delete article" do
+      response.should have_selector("a", href: article_path(@article), 'data-method' => "delete")
+    end
 
-  # describe "PUT update" do
+    it "should have the link to associated project" do
+      response.should have_selector("a", href: project_path(@project))
+    end
+  end
 
-  #   describe "with valid params" do
-  #     it "updates the requested article" do
-  #       article = @user.articles.create! valid_attributes
-  #       # Assuming there are no other articles in the database, this
-  #       # specifies that the Article created on the previous line
-  #       # receives the :update_attributes message with whatever params are
-  #       # submitted in the request.
-  #       Article.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-  #       put :update, {:id => article.to_param, :article => {'these' => 'params'}}, valid_session
-  #     end
+  describe "GET new" do
+    it "should not be success" do
+      expect { get(:new) }.to raise_error(ActionController::RoutingError)
+    end
+  end
 
-  #     it "assigns the requested article as @article" do
-  #       article = @user.articles.create! valid_attributes
-  #       put :update, {:id => article.to_param, :article => valid_attributes}, valid_session
-  #       assigns(:article).should eq(article)
-  #     end
+  describe "GET edit" do
+    before(:each) do
+      @article = @user.articles.create! valid_attributes
+      get :edit, { :id => @article.to_param }
+    end
 
-  #     it "redirects to the article" do
-  #       article = @user.articles.create! valid_attributes
-  #       put :update, {:id => article.to_param, :article => valid_attributes}, valid_session
-  #       response.should redirect_to(article)
-  #     end
-  #   end
+    it "should be success" do
+      response.should be_success
+    end
 
-  #   describe "with invalid params" do
-  #     it "assigns the article as @article" do
-  #       article = @user.articles.create! valid_attributes
-  #       # Trigger the behavior that occurs when invalid params are submitted
-  #       Article.any_instance.stub(:save).and_return(false)
-  #       put :update, {:id => article.to_param, :article => {}}, valid_session
-  #       assigns(:article).should eq(article)
-  #     end
+    it "should assigns the requested article as @article" do
+      assigns(:article).should eq(@article)
+    end
 
-  #     it "re-renders the 'edit' template" do
-  #       article = @user.articles.create! valid_attributes
-  #       # Trigger the behavior that occurs when invalid params are submitted
-  #       Article.any_instance.stub(:save).and_return(false)
-  #       put :update, {:id => article.to_param, :article => {}}, valid_session
-  #       response.should render_template("edit")
-  #     end
-  #   end
-  # end
+    it "should have the right title" do
+      response.should have_selector("title", content: "Edit article")
+    end
+  end
 
-  # describe "DELETE destroy" do
-  #   it "destroys the requested article" do
-  #     article = @user.articles.create! valid_attributes
-  #     expect {
-  #       delete :destroy, {:id => article.to_param}, valid_session
-  #     }.to change(Article, :count).by(-1)
-  #   end
+  describe "POST create" do
+    before(:each) do
+      sign_in(@user)
+    end
 
-  #   it "redirects to the articles list" do
-  #     article = @user.articles.create! valid_attributes
-  #     delete :destroy, { :id => article.to_param }, valid_session
-  #     response.should redirect_to(articles_url)
-  #   end
-  # end
+    describe "with valid params" do
+      before(:each) do
+        @attributes = valid_attributes
+        @attributes[:project_id] = @project.id
+        @attributes.delete :project
+      end
 
+      it "should creates a new Article" do
+        expect {
+          post :create, { article: @attributes }
+        }.to change(Article, :count).by(1)
+      end
+
+      it "should assigns a newly created article as @article" do
+        post :create, { article: @attributes }
+        assigns(:article).should be_a(Article)
+        assigns(:article).should be_persisted
+      end
+
+      it "should redirects to the created article" do
+        post :create, { article: @attributes }
+        response.should redirect_to(Article.last)
+      end
+
+      #it "should have a flash notice message" do
+      #  assigns(:notice).should eq("Article was successfully created.")
+      #end
+    end
+
+    describe "with invalid params" do
+      it "should assigns a newly created but unsaved article as @article" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        Article.any_instance.stub(:save).and_return(false)
+        post :create, { article: { project_id: @project.id } }
+        assigns(:article).should be_a_new(Article)
+      end
+
+      it "should re-renders the 'new' template" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        Article.any_instance.stub(:save).and_return(false)
+        post :create, { article: { project_id: @project.id } }
+        response.should render_template("new")
+      end
+    end
+  end
+
+  describe "PUT update" do
+    before(:each) do
+      @updated_attributes = valid_attributes().merge(title: "some other title")
+      @updated_attributes.delete :project
+      @article = @user.articles.create! valid_attributes
+      sign_in(@user)
+    end
+
+    describe "with valid params" do
+      it "should updates the requested article" do
+        # Assuming there are no other articles in the database, this
+        # specifies that the Article created on the previous line
+        # receives the :update_attributes message with whatever params are
+        # submitted in the request.
+        #Article.any_instance.should_receive(:update_attributes).with(@updated_attributes)
+        put :update, id: @article, article: @updated_attributes
+        @article.reload
+        @article.title.should == @updated_attributes[:title]
+      end
+
+      it "should assigns the requested article as @article" do
+        put :update, id: @article, article: @updated_attributes
+        assigns(:article).should eq(@article)
+      end
+
+      it "should redirects to the article" do
+        put :update, id: @article, article: @updated_attributes
+        response.should redirect_to(@article)
+      end
+    end
+
+    describe "with invalid params" do
+      it "should assigns the article as @article" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        Article.any_instance.stub(:save).and_return(false)
+        put :update, id: @article, article: {}
+        assigns(:article).should eq(@article)
+      end
+
+      it "re-renders the 'edit' template" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        Article.any_instance.stub(:save).and_return(false)
+        put :update, id: @article, article: {}
+        response.should render_template("edit")
+      end
+    end
+  end
+
+  describe "DELETE destroy" do
+    before(:each) do
+      @article = @user.articles.create! valid_attributes
+    end
+
+    it "should destroys the requested article" do
+      expect {
+        delete :destroy, id: @article
+      }.to change(Article, :count).by(-1)
+    end
+
+    it "should redirects to the articles list" do
+      delete :destroy, id: @article
+      response.should redirect_to(articles_path)
+    end
+  end
 end

@@ -39,7 +39,7 @@ describe Project do
   describe "questions association" do
     before(:each) do
       @project = Project.new(@attr)
-      @question = @user.questions.create!(content: "Some question", project: @project)
+      @question = @user.questions.create!(title: "Some title", content: "Some question", project: @project)
     end
 
     it "should have a questions attribute" do

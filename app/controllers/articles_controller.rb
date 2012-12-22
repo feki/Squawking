@@ -2,6 +2,8 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
+    @title = "Articles"
+
     @articles = if params[:project_id]
       Article.find_all_by_project_id(params[:project_id])
     else
@@ -18,6 +20,7 @@ class ArticlesController < ApplicationController
   # GET /articles/1.json
   def show
     @article = Article.find(params[:id])
+    @title = "Article: #{@article.title}"
 
     respond_to do |format|
       format.html # show.html.erb
@@ -40,6 +43,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1/edit
   def edit
+    @title = "Edit article"
     @article = Article.find(params[:id])
     @project_id = @article.project_id
   end
