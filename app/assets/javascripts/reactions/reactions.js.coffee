@@ -8,32 +8,44 @@ jQuery ->
 # creating reaction ajax events
 jQuery ->
   $("#create_reaction_form")
-    .bind("ajax:beforeSend", (evt, xhr, settings) ->
+    .live("ajax:beforeSend", (evt, xhr, settings) ->
       $submitButton = $(this).find('input[name="commit"]');
-
+      $submitButton.data("origText", $(this).attr("value"));
+      $submitButton.attr("value", "Submitting...");
+      $('div.validation-error').remove();
       # Update the text of the submit button to let the user know stuff is happening.
       # But first, store the original text of the submit button, so it can be restored when the request is finished.
-      $submitButton.data( 'origText', $(this).text() );
-      $submitButton.text( "Submitting..." );
+      $submitButton.data("origText", $(this).attr("value"));
+      $submitButton.attr("value", "Submitting...");
       $('div.validation-error').remove();
     )
-    .bind("ajax:success", (evt, data, status, xhr) ->
-      $form = $(this);
+    .live("ajax:success", (evt, data, status, xhr) ->
+#      $form = $(this);
+
+      $(new_reaction_form_dialog).dialog("close");
 
       # Reset fields and any validation errors, so form can be used again, but leave hidden_field values intact.
-      $form.find('textarea').val("");
+#      $form.find('textarea').val("");
 
       # Insert response partial into page below the form.
       $('#reactions').append(xhr.responseText);
 
     )
-    .bind('ajax:complete', (evt, xhr, status) ->
-      $submitButton = $(this).find('input[name="commit"]');
+    .live('ajax:complete', (evt, xhr, status) ->
+#      $submitButton = $(this).find('input[name="commit"]');
+#
+#      # Restore the original submit button text
+#      $submitButton.text( $(this).data('origText') );
 
+      $submitButton = $(this).find('input[name="commit"]')
       # Restore the original submit button text
-      $submitButton.text( $(this).data('origText') );
+        .attr("value", $(this).data('origText'));
     )
-    .bind("ajax:error", (evt, xhr, status, error) ->
+    .live("ajax:error", (evt, xhr, status, error) ->
+      $submitButton = $(this).find('input[name="commit"]')
+      # Restore the original submit button text
+        .attr("value", $(this).data('origText'));
+
       try
         # Populate errorText with the comment errors
         errors = $.parseJSON(xhr.responseText);
@@ -54,7 +66,7 @@ jQuery ->
         #{errorText}</div>"
 
       # Insert error list
-      $('#new-reaction').prepend(errorText);
+      $('#create_reaction_form').prepend(errorText);
     )
 
 # Ajax listeners for deleting reaction.
@@ -102,3 +114,47 @@ jQuery ->
 
       $(this).parent().prepend(errorText);
     )
+
+  # creating reaction ajax events
+  jQuery ->
+    $("#edit_reaction_form")
+      .live("ajax:beforeSend", (evt, xhr, settings) ->
+        $submitButton = $(this).find('input[name="commit"]');
+        $submitButton.data("origText", $(this).attr("value"));
+        $submitButton.attr("value", "Submitting...");
+        $('div.validation-error').remove();
+      )
+      .live("ajax:success", (evt, data, status, xhr) ->
+        $(reaction_div).replaceWith(xhr.responseText);
+        $(reaction_form_dialog).dialog("close");
+#        article_loation = $("#back_to_article").attr("href");
+#        window.location.replace(article_loation)
+      )
+      .live('ajax:complete', (evt, xhr, status) ->
+        $submitButton = $(this).find('input[name="commit"]')
+        # Restore the original submit button text
+          .attr("value", $(this).data('origText'));
+      )
+      .live("ajax:error", (evt, xhr, status, error) ->
+        $submitButton = $(this).find('input[name="commit"]')
+        # Restore the original submit button text
+          .attr("value", $(this).data('origText'));
+
+        try
+          errors = $.parseJSON(xhr.responseText);
+        catch err
+          errors = {message: "Please reload the page and try again"};
+
+        errorText = "There were errors with the submission: \n<ul>";
+
+        for error in Object.keys(errors)
+          errorText += "<li>" + error + ': ' + errors[error] + "</li> ";
+
+        errorText += "</ul>";
+
+        errorText = "<div class='validation-error alert alert-error'>
+          <button type='button' class='close' data-dismiss='alert'>×</button>
+          #{errorText}</div>"
+
+        $('#edit_reaction_form').prepend(errorText);
+      )

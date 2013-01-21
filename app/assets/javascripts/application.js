@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.dialog
 //= require twitter/bootstrap
 //= require bootstrap
 //= require markItUp/markitup.js
@@ -19,5 +20,5 @@
 //= require reactions/reactions
 
 $(document).ready(function () {
-  $(".markItUp").markItUp(mySettings);
+  $("textarea.markItUp").removeClass("markItUp").markItUp(mySettings);
 });

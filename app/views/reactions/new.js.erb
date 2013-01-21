@@ -1,0 +1,15 @@
+<% content = render partial: "form", locals: { reaction: @reaction } %>
+var new_reaction_form_dialog = $("<div></div>").append("<%= escape_javascript(content) %>")
+new_reaction_form_dialog.dialog({
+    autoOpen: true,
+    modal: true,
+    title: "New reaction",
+    resizable: true,
+    height: "auto",
+    width: "auto",
+    close: function() {
+        new_reaction_form_dialog.dialog("destroy").remove();
+    }
+})
+
+$("textarea.markItUp").removeClass("markItUp").markItUp(mySettings);

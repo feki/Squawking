@@ -1,0 +1,6 @@
+h1 Editing reaction
+
+#update_reaction_form
+  == render partial: "form", locals: { reaction: @reaction }
+
+= link_to 'Back', article_path(@reaction.article), id: "back_to_article", class: "btn"
