@@ -1,13 +1,6 @@
-# attach click event listener to 'New reaction' button
-jQuery ->
-  $("#new_reaction_button")
-    .click((evnObj) ->
-      $("#create_reaction_form").slideToggle();
-    );
-
 # creating reaction ajax events
 jQuery ->
-  $("#create_reaction_form")
+  $("#new_comment_form")
     .live("ajax:beforeSend", (evt, xhr, settings) ->
       $submitButton = $(this).find('input[name="commit"]');
       $submitButton.data("origText", $(this).attr("value"));
@@ -22,13 +15,13 @@ jQuery ->
     .live("ajax:success", (evt, data, status, xhr) ->
 #      $form = $(this);
 
-      $(new_reaction_form_dialog).dialog("close");
+      $(new_comment_dialog).dialog("close");
 
       # Reset fields and any validation errors, so form can be used again, but leave hidden_field values intact.
 #      $form.find('textarea').val("");
 
       # Insert response partial into page below the form.
-      $('#reactions').append(xhr.responseText);
+      reaction_comments_div.append(xhr.responseText);
 
     )
     .live('ajax:complete', (evt, xhr, status) ->
@@ -52,13 +45,13 @@ jQuery ->
       catch err
         # If the responseText is not valid JSON (like if a 500 exception was thrown), populate errors with a generic error message.
         errors = {message: "Please reload the page and try again"};
-      
+
       # Build an unordered list from the list of errors
       errorText = "There were errors with the submission: \n<ul>";
 
       for error in Object.keys(errors)
         errorText += "<li>" + error + ': ' + errors[error] + "</li> ";
-      
+
       errorText += "</ul>";
 
       errorText = "<div class='validation-error alert alert-error'>
@@ -66,12 +59,12 @@ jQuery ->
         #{errorText}</div>"
 
       # Insert error list
-      $('#create_reaction_form').prepend(errorText);
+      $('#comment_form').prepend(errorText);
     )
 
 # Ajax listeners for deleting reaction.
 jQuery ->
-  $('a[data-action="delete-reaction"]')
+  $('a[data-action="delete-comment"]')
     .live("ajax:beforeSend", (evt, xhr, settings) ->
       # link to delete action
       $a = $(this);
@@ -88,7 +81,7 @@ jQuery ->
     .live("ajax:success", (evt, data, status, xhr) ->
       $a = $(this);
       # remove reaction from DOM tree
-      $a.parent().remove();
+      $a.parent().parent().remove();
     )
     .live('ajax:complete', (evt, xhr, status) ->
       # set up link text to original text
@@ -100,12 +93,12 @@ jQuery ->
         errors = $.parseJSON(xhr.responseText);
       catch err
         errors = {message: "Please reload the page and try again"}
-      
+
       errorText = "There were errors with the submission: \n<ul>";
 
       for error in Object.keys(errors)
         errorText += "<li>" + error + ': ' + errors[error] + "</li> ";
-      
+
       errorText += "</ul>";
 
       errorText = "<div class='delete-error alert alert-error'>
@@ -115,9 +108,9 @@ jQuery ->
       $(this).parent().prepend(errorText);
     )
 
-  # editing reaction ajax events
+# editing reaction ajax events
   jQuery ->
-    $("#edit_reaction_form")
+    $("#edit_comment_form")
       .live("ajax:beforeSend", (evt, xhr, settings) ->
         $submitButton = $(this).find('input[name="commit"]');
         $submitButton.data("origText", $(this).attr("value"));
@@ -125,8 +118,8 @@ jQuery ->
         $('div.validation-error').remove();
       )
       .live("ajax:success", (evt, data, status, xhr) ->
-        $(reaction_div).replaceWith(xhr.responseText);
-        $(reaction_form_dialog).dialog("close");
+        $(comment_div).replaceWith(xhr.responseText);
+        $(comment_form_dialog).dialog("close");
 #        article_loation = $("#back_to_article").attr("href");
 #        window.location.replace(article_loation)
       )
@@ -156,5 +149,5 @@ jQuery ->
           <button type='button' class='close' data-dismiss='alert'>×</button>
           #{errorText}</div>"
 
-        $('#edit_reaction_form').prepend(errorText);
+        $('#comment_form').prepend(errorText);
       )

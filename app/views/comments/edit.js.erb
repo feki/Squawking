@@ -1,0 +1,16 @@
+<% content = render partial: "edit_form", locals: { comment: @comment } %>
+var comment_div = $("div#comment<%= @comment.id %>")
+comment_div.hide()
+var comment_form_dialog = $("<div></div>").append("<%= escape_javascript(content) %>")
+comment_form_dialog.dialog({
+    autoOpen: true,
+    modal: true,
+    title: "Editing comment",
+    resizable: true,
+    height: "auto",
+    width: "auto",
+    close: function() {
+        comment_div.show();
+        comment_form_dialog.dialog("destroy").remove();
+    }
+})

@@ -21,10 +21,14 @@
         .article-content.row-fluid
           = markdown(@article.content)
         .row-fluid
-          = link_to "New reaction", new_reaction_path(article_id: @article.id), remote: true, class: "btn btn-link pull-right"
-          .reactions.readonly-content#reactions
-            h3 Reactions
-            == render partial: "reactions/index", locals: { reactions: @article.reactions }
+          .span12
+            .row-fluid
+              .span12
+                = link_to "New reaction", new_reaction_path(article_id: @article.id), remote: true, class: "btn btn-link pull-right"
+                h3 Reactions
+            .row-fluid
+              .reactions.readonly-content.span12#reactions
+                == render partial: "reactions/index", locals: { reactions: @article.reactions }
     /.new-reaction.row-fluid#new-reaction
     /  button class="btn btn-link pull-right" id="new_reaction_button"
     /    | New reaction

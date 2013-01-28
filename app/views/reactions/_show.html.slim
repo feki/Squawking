@@ -2,10 +2,16 @@
   .reaction.span12 id="reaction#{reaction.id}"
     / .notice
     /   = notice
-    .reaction-content
-      = markdown(reaction.content)
-    hr
-    =' link_to "Delete reaction", reaction, confirm: "Are you sure?", method: :delete, :"data-action" => "delete-reaction", remote: true, class: "pull-right btn btn-link"
-    =' link_to "Edit reaction", edit_reaction_path(reaction), remote: true, class: "pull-right btn btn-link"
-    .pull-left.created-info
-      | created by #{link_to reaction.user.email, "#reaction.user", class: "btn btn-link"}: #{time_ago_in_words(reaction.created_at)}
+    .row-fluid
+      .reaction-content
+        = markdown(reaction.content)
+      hr
+      =' link_to "Delete reaction", reaction, confirm: "Are you sure?", method: :delete, :"data-action" => "delete-reaction", remote: true, class: "pull-right btn btn-link"
+      =' link_to "Edit reaction", edit_reaction_path(reaction), remote: true, class: "pull-right btn btn-link"
+      =' link_to "Add comment", new_comment_path(reaction_id: reaction.id), remote: true, class: "pull-right btn btn-link"
+      .pull-left.created-info
+        | created by #{link_to reaction.user.email, "#reaction.user", class: "btn btn-link"}: #{time_ago_in_words(reaction.created_at)}
+
+    .row-fluid
+      .span12 id="reaction#{reaction.id}-comments"
+        == render partial: "comments/index", locals: { comments: reaction.comments }

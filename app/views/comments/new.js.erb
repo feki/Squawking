@@ -1,0 +1,14 @@
+<% content = render partial: "form", locals: { comment: @comment } %>
+var reaction_comments_div = $("#reaction<%= @comment.commentable_id %>-comments")
+var new_comment_dialog = $("<div></div>").append("<%= escape_javascript(content) %>")
+new_comment_dialog.dialog({
+    autoOpen: true,
+    modal: true,
+    title: "New comment",
+    resizable: true,
+    height: "auto",
+    width: "auto",
+    close: function() {
+        new_comment_dialog.dialog("destroy").remove();
+    }
+})

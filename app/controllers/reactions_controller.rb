@@ -28,7 +28,6 @@ class ReactionsController < ApplicationController
   # GET /reactions/new.json
   def new
     @reaction = current_user.reactions.build
-    $stderr.puts @reaction.inspect
     @reaction.article = Article.find_by_id(params[:article_id])
 
     respond_with(@reaction, layout: !request.xhr?)
