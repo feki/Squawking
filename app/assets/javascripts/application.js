@@ -12,12 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.dialog
 //= require twitter/bootstrap
 //= require bootstrap
 //= require markItUp/markitup.js
 //= require markItUp/markitup-markdown
 //= require reactions/reactions
+//= require comments/comments
 
 $(document).ready(function () {
-  $(".markItUp").markItUp(mySettings);
+  $("textarea.markItUp").removeClass("markItUp").markItUp(mySettings);
 });

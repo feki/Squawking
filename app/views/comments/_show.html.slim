@@ -1,0 +1,10 @@
+/p#notice = notice
+.row-fluid
+  .comment.span12 id="comment#{comment.id}"
+    .comment-content
+      = comment.content
+    hr
+    =' link_to "Delete comment", comment, confirm: "Are you sure?", method: :delete, :"data-action" => "delete-comment", remote: true, class: "pull-right btn btn-link"
+    =' link_to "Edit comment", edit_comment_path(comment), remote: true, class: "pull-right btn btn-link"
+    .pull-left.created-info
+      | created by #{link_to comment.user.email, "#comment.user", class: "btn btn-link"}: #{time_ago_in_words(comment.created_at)}

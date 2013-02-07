@@ -30,5 +30,12 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
+  # Devise test helpers for controller specs.
   config.include Devise::TestHelpers, type: :controller
+
+  # Stub authentication in controller specs.
+  config.include ControllerHelpers, type: :controller
+
+  # Include Rails.application.routes.url_helpers.
+  config.include Rails.application.routes.url_helpers, type: :controller
 end

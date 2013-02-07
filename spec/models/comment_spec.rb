@@ -42,7 +42,7 @@ describe Comment do
 
   describe "commentable(answer) associations" do
     before(:each) do
-      @question = @user.questions.create!(content: "Some question", project: FactoryGirl.create(:project))
+      @question = @user.questions.create!(title: "Some title", content: "Some question", project: FactoryGirl.create(:project))
       @answer   = @user.answers.create!(content: "Some answer", question: @question)
       @comment  = @user.comments.create!(content: "Some comment", commentable: @answer)
     end

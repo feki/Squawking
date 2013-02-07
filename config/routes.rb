@@ -22,7 +22,8 @@ RubyProject::Application.routes.draw do
   resources :questions, except: :new
   resources :articles, except: :new
 
-  resources :reactions, only: [:create, :update, :destroy]
+  resources :reactions, only: [:create, :update, :destroy, :edit, :new]
+  resources :comments, except: [:index, :show]
 
   resources :answers
 

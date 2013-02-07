@@ -6,25 +6,30 @@
       .readonly-content.span12
         .article-title.row-fluid
           .btn-group.pull-right
-              a.btn.dropdown-toggle data-toggle="dropdown"
-                | Actions 
-                span.caret
-              ul.dropdown-menu
-                li
-                  = link_to 'Edit', edit_article_path(@article)
-                li
-                  = link_to 'Delete', @article, confirm: 'Are you sure?', method: :delete
-                li
-                  = link_to 'Back to project', @article.project
+            a.btn.dropdown-toggle data-toggle="dropdown"
+              | Actions
+              span.caret
+            ul.dropdown-menu
+              li
+                = link_to 'Edit', edit_article_path(@article)
+              li
+                = link_to 'Delete', @article, data: { confirm: 'Are you sure?' }, method: :delete
+              li
+                = link_to 'Back to project', @article.project
           h2 = @article.title
         hr
         .article-content.row-fluid
           = markdown(@article.content)
         .row-fluid
-          .reactions.readonly-content#reactions
-            h3 Reactions
-            == render partial: "reactions/index", locals: { reactions: @article.reactions }
-    .new-reaction.row-fluid#new-reaction
-      button class="btn btn-link pull-right" id="new_reaction_button"
-        | New reaction
-      == render partial: "reactions/form", locals: { reaction: @article.reactions.build, article: @article }
+          .span12
+            .row-fluid
+              .span12
+                = link_to "New reaction", new_reaction_path(article_id: @article.id), remote: true, class: "btn btn-link pull-right"
+                h3 Reactions
+            .row-fluid
+              .reactions.readonly-content.span12#reactions
+                == render partial: "reactions/index", locals: { reactions: @article.reactions }
+    /.new-reaction.row-fluid#new-reaction
+    /  button class="btn btn-link pull-right" id="new_reaction_button"
+    /    | New reaction
+    /  == render partial: "reactions/form", locals: { reaction: @article.reactions.build, article: @article }

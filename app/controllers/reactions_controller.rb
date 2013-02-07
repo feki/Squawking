@@ -1,6 +1,6 @@
 class ReactionsController < ApplicationController
 
-  respond_to :html, :xml, :json
+  respond_to :html, :xml, :js, :json
 
   # GET /reactions
   # GET /reactions.json
@@ -26,19 +26,18 @@ class ReactionsController < ApplicationController
 
   # GET /reactions/new
   # GET /reactions/new.json
-  # def new
-  #   @reaction = Reaction.new
+  def new
+    @reaction = current_user.reactions.build
+    @reaction.article = Article.find_by_id(params[:article_id])
 
-  #   respond_to do |format|
-  #     format.html # new.html.erb
-  #     format.json { render json: @reaction }
-  #   end
-  # end
+    respond_with(@reaction, layout: !request.xhr?)
+  end
 
   # GET /reactions/1/edit
-  # def edit
-  #   @reaction = Reaction.find(params[:id])
-  # end
+  def edit
+    @reaction = Reaction.find(params[:id])
+    respond_with( @reaction, :layout => !request.xhr? )
+  end
 
   # POST /reactions
   # POST /reactions.json
@@ -49,7 +48,7 @@ class ReactionsController < ApplicationController
     @reaction = current_user.reactions.new(params[:reaction])
 
     if @reaction.save
-      respond_with do |format|
+      respond_to do |format|
         format.html do
           if request.xhr?
             render partial: 'reactions/show',
@@ -62,7 +61,7 @@ class ReactionsController < ApplicationController
         end
       end
     else
-      respond_with do |format|
+      respond_to do |format|
         format.html do
           if request.xhr?
             render json: @reaction.errors, status: :unprocessable_entity
@@ -88,13 +87,41 @@ class ReactionsController < ApplicationController
   # PUT /reactions/1.json
   def update
     @reaction = Reaction.find(params[:id])
+    params[:reaction].delete :article_id
 
-    respond_to do |format|
-      if @reaction.update_attributes(params[:reaction])
-        format.html { redirect_to @reaction, notice: 'Reaction was successfully updated.' }
+    #respond_to do |format|
+    #  if @reaction.update_attributes(params[:reaction])
+    #    format.html { redirect_to @reaction.article, notice: 'Reaction was successfully updated.' }
+    #    format.json { head :no_content }
+    #  else
+    #    format.html { render action: "edit" }
+    #    format.json { render json: @reaction.errors, status: :unprocessable_entity }
+    #  end
+    #end
+
+    if @reaction.update_attributes(params[:reaction])
+      respond_to do |format|
+        format.html do
+          if request.xhr?
+            render partial: 'reactions/show',
+                   locals: { reaction: @reaction },
+                   layout: false,
+                   status: :created
+          else
+            redirect_to @reaction.article
+          end
+        end
         format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
+      end
+    else
+      respond_to do |format|
+        format.html do
+          if request.xhr?
+            render json: @reaction.errors, status: :unprocessable_entity
+          else
+            render action: "edit", id: @reaction
+          end
+        end
         format.json { render json: @reaction.errors, status: :unprocessable_entity }
       end
     end
@@ -107,7 +134,7 @@ class ReactionsController < ApplicationController
     @reaction.destroy
 
     if @reaction.destroyed?
-      respond_with do |format|
+      respond_to do |format|
         format.html do
           if request.xhr?
             render nothing: true, status: :no_content
@@ -117,7 +144,7 @@ class ReactionsController < ApplicationController
         end
       end
     else
-      respond_with do |format|
+      respond_to do |format|
         format.html do
           if request.xhr?
             render json: @reaction.errors, status: :unprocessable_entity
