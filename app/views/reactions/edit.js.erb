@@ -1,0 +1,18 @@
+<% content = render partial: "edit_form", locals: { reaction: @reaction } %>
+var reaction_div = $("div#reaction<%= @reaction.id %>")
+reaction_div.hide()
+var reaction_form_dialog = $("<div></div>").append("<%= escape_javascript(content) %>")
+reaction_form_dialog.dialog({
+    autoOpen: true,
+    modal: true,
+    title: "Editing reaction",
+    resizable: true,
+    height: "auto",
+    width: "auto",
+    close: function() {
+        reaction_div.show();
+        reaction_form_dialog.dialog("destroy").remove();
+    }
+})
+
+$("textarea.markItUp").removeClass("markItUp").markItUp(mySettings);
