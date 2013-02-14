@@ -1,5 +1,7 @@
 RubyProject::Application.routes.draw do
-  
+
+  get 'tags/:tag', to: 'tags#index', as: :tag
+
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'pages#welcome'

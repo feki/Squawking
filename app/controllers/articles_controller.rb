@@ -2,7 +2,7 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @title = "Articles"
+    @title = 'Articles'
 
     @articles = if params[:project_id]
       Article.find_all_by_project_id(params[:project_id])
@@ -43,7 +43,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1/edit
   def edit
-    @title = "Edit article"
+    @title = 'Edit article'
     @article = Article.find(params[:id])
     @project_id = @article.project_id
   end
@@ -60,7 +60,7 @@ class ArticlesController < ApplicationController
         format.html { redirect_to @article, notice: 'Article was successfully created.' }
         format.json { render json: @article, status: :created, location: @article }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @article.errors, status: :unprocessable_entity }
       end
     end
@@ -77,7 +77,7 @@ class ArticlesController < ApplicationController
         format.html { redirect_to @article, notice: 'Article was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @article.errors, status: :unprocessable_entity }
       end
     end

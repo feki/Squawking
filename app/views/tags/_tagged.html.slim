@@ -1,0 +1,33 @@
+h2
+  ' Articles and questions tagged with
+  i
+    | #{@tag}
+br
+.tabbable.tabs-left
+  ul.nav.nav-tabs
+    li
+      a href="#articles" data-toggle="tab"
+        | Articles
+    li
+      a href="#questions" data-toggle="tab"
+        | Questions
+    li
+      a href="#all-tags" data-toggle="tab"
+        | All tags
+  .tab-content
+    .tab-pane id="articles"
+      - if @tagged[:articles].empty?
+        h3
+          | No tagged article.
+      - else
+        = render partial: 'articles/index', locals: { articles: @tagged[:articles] }
+    .tab-pane id="questions"
+      - if @tagged[:questions].empty?
+        h3
+          | No tagged question.
+      - else
+        = render partial: 'questions/index', locals: { questions: @tagged[:questions] }
+    .tab-pane id="all-tags"
+      h3
+        ' All tabs:
+      | #{raw @tags.map { |t| link_to t.name, tag_path(t.name) }.join(', ')}

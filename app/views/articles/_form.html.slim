@@ -1,7 +1,7 @@
 = form_for @article, html: { class: "form-horizontal" } do |f|
   - if @article.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@article.errors.count, "error")} prohibited this article from being saved:"
+      h2 = "#{pluralize(@article.errors.count, 'error')} prohibited this article from being saved:"
       ul
         - @article.errors.full_messages.each do |message|
           li = message
@@ -9,14 +9,19 @@
   = f.hidden_field(:project_id, value: @project_id)
 
   .control-group
-    = f.label :title, class: "control-label"
+    = f.label :title, class: 'control-label'
     .controls
       = f.text_field :title
 
   .control-group
-    = f.label :content, class: "control-label"
+    = f.label :tag_list, 'Tags (separated by commas)', class: 'control-label'
     .controls
-      = f.text_area :content, class: "markItUp"
+      = f.text_field :tag_list
+
+  .control-group
+    = f.label :content, class: 'control-label'
+    .controls
+      = f.text_area :content, class: 'markItUp'
 
   .control-group
     .controls

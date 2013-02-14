@@ -15,6 +15,11 @@
       = f.text_field :title
 
   .control-group
+    = f.label :tag_list, 'Tags (separated by commas)', class: 'control-label'
+    .controls
+      = f.text_field :tag_list
+
+  .control-group
     = f.label :content, class: "control-label"
     .controls
       = f.text_area :content, class: "markItUp"
