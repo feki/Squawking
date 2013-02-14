@@ -136,9 +136,9 @@ jQuery ->
           .attr("value", $(this).data('origText'));
       )
       .live("ajax:error", (evt, xhr, status, error) ->
-        $submitButton = $(this).find('input[name="commit"]')
+        $submitButton = $(this).find('input[name="commit"]');
         # Restore the original submit button text
-          .attr("value", $(this).data('origText'));
+        $submitButton.attr("value", $(this).data('origText'));
 
         try
           errors = $.parseJSON(xhr.responseText);

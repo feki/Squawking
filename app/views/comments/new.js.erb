@@ -1,5 +1,9 @@
 <% content = render partial: "form", locals: { comment: @comment } %>
-var reaction_comments_div = $("#reaction<%= @comment.commentable_id %>-comments")
+<% if @comment.commentable.is_a? Reaction%>
+    var comments_div = $("#reaction<%= @comment.commentable_id %>-comments")
+<% else %>
+	var comments_div = $("#answer<%= @comment.commentable_id %>-comments")
+<% end %>
 var new_comment_dialog = $("<div></div>").append("<%= escape_javascript(content) %>")
 new_comment_dialog.dialog({
     autoOpen: true,

@@ -6,8 +6,10 @@
         - comment.errors.full_messages.each do |message|
           li = message
 
-  = f.hidden_field :commentable_id, value: comment.commentable_id
-
+  - if comment.commentable.is_a? Reaction 
+  	= f.hidden_field :reaction_id, value: comment.commentable.id
+  -	else 
+  	= f.hidden_field :answer_id, value: comment.commentable.id
   = f.text_area :content
 
   = f.submit

@@ -1,5 +1,16 @@
-<% content = render partial: 'form', locals: {answer: @answer} %>	
-var answer_div = $('div#<%= @answer.id%>');
-answer_div.children('.row-fluid').hide();
-answer_div.append("<%= escape_javascript(content) %>");
-answer_div.find(".markItUp").markItUp(mySettings);
+<% content = render partial: "edit_form", locals: { answer: @answer } %>
+var answer_div = $("div#<%= @answer.id %>")
+var answer_form_dialog = $("<div></div>").append("<%= escape_javascript(content) %>")
+answer_form_dialog.dialog({
+    autoOpen: true,
+    modal: true,
+    title: "Editing answer",
+    resizable: true,
+    height: "auto",
+    width: "auto",
+    close: function() {
+        answer_form_dialog.dialog("destroy").remove();
+    }
+})
+
+$("textarea.markItUp").removeClass("markItUp").markItUp(mySettings);

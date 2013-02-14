@@ -28,8 +28,11 @@ class CommentsController < ApplicationController
   # GET /comments/new.json
   def new
     @comment = current_user.comments.build
-    @comment.commentable = Reaction.find_by_id(params[:reaction_id].to_i)
-
+    if params.has_key? :reaction_id
+      @comment.commentable = Reaction.find_by_id(params[:reaction_id].to_i)
+    else  
+      @comment.commentable = Answer.find_by_id(params[:answer_id].to_i)
+    end
     respond_with(@comment, layout: !request.xhr?)
   end
 
@@ -42,8 +45,16 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    params[:comment][:commentable] = Reaction.find_by_id(params[:comment][:commentable_id])
-    params[:comment].delete :commentable_id
+    if params[:comment].has_key? :reaction_id
+      params[:comment][:commentable] = Reaction.find_by_id(params[:comment][:reaction_id])
+      params[:comment].delete :reaction_id
+    else 
+      params[:comment][:commentable] = Answer.find_by_id(params[:comment][:answer_id])
+      params[:comment].delete :answer_id
+    end   
+
+    # params[:comment][:commentable] = Reaction.find_by_id(params[:comment][:commentable_id])
+    # params[:comment].delete :commentable_id
 
     @comment = current_user.comments.new(params[:comment])
 

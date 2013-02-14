@@ -21,7 +21,7 @@ jQuery ->
 #      $form.find('textarea').val("");
 
       # Insert response partial into page below the form.
-      reaction_comments_div.append(xhr.responseText);
+      comments_div.append(xhr.responseText);
 
     )
     .live('ajax:complete', (evt, xhr, status) ->

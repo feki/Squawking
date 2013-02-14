@@ -50,8 +50,33 @@ class AnswersController < ApplicationController
   def update
     @answer = Answer.find(params[:id])
     params[:answer].delete :question_id
-    @answer.update_attributes(params[:answer])
-    respond_with( @answer, :layout => !request.xhr? )
+
+    if @answer.update_attributes(params[:answer])
+      respond_to do |format|
+        format.html do
+          if request.xhr?
+            render partial: 'answers/answer',
+                   locals: { answer: @answer },
+                   layout: false,
+                   status: :created
+          else
+            redirect_to @answer.question
+          end
+        end
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html do
+          if request.xhr?
+            render json: @answer.errors, status: :unprocessable_entity
+          else
+            render action: "edit", id: @answer
+          end
+        end
+        format.json { render json: @answer.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # DELETE /answers/1

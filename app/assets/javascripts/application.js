@@ -19,6 +19,7 @@
 //= require markItUp/markitup-markdown
 //= require reactions/reactions
 //= require comments/comments
+//= require answers/answers
 
 $(document).ready(function () {
   $("textarea.markItUp").removeClass("markItUp").markItUp(mySettings);
