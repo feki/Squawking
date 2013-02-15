@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :questions, :dependent => :destroy
   has_many :reactions, :dependent => :destroy
   has_many :articles,  :dependent => :destroy
+  has_and_belongs_to_many :projects
 
   email_regexp = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, :format => { :with => email_regexp }
