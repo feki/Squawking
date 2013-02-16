@@ -6,6 +6,7 @@ class TagsController < ApplicationController
     @title = "Tagged with \"#{@tag}\""
 
     @tagged = {}
+    @tagged[:projects]  = Project.tagged_with(@tag)
     @tagged[:questions] = Question.tagged_with(@tag)
     @tagged[:articles]  = Article.tagged_with(@tag)
 

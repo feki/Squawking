@@ -32,6 +32,9 @@
             | Questions
       .tab-content
         .tab-pane.active id="description"
+          .row-fluid
+            ' Tags:
+            = raw @project.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')
           .markdown-readonly
             = markdown(@project.description)
         .tab-pane id="articles"

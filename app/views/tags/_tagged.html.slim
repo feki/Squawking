@@ -6,6 +6,9 @@ br
 .tabbable.tabs-left
   ul.nav.nav-tabs
     li
+      a href="#projects" data-toggle="tab"
+        | Projects
+    li
       a href="#articles" data-toggle="tab"
         | Articles
     li
@@ -15,6 +18,12 @@ br
       a href="#all-tags" data-toggle="tab"
         | All tags
   .tab-content
+    .tab-pane id="projects"
+      - if @tagged[:projects].empty?
+        h3
+          | No tagged projects.
+      - else
+        = render partial: 'projects/index', locals: { projects: @tagged[:projects] }
     .tab-pane id="articles"
       - if @tagged[:articles].empty?
         h3

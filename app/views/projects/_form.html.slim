@@ -10,6 +10,10 @@
     div class="controls"
       = f.text_field :name
   div class="control-group"
+    = f.label :tag_list, 'Tags (separated by commas)', class: "control-label"
+    div class="controls"
+      = f.text_field :tag_list
+  div class="control-group"
     = f.label :description, class: "control-label"
     div class="controls"
       = f.text_area :description, class: "markItUp"

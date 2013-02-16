@@ -1,0 +1,9 @@
+table.table
+  thead
+    tr
+      th Name
+  tbody
+    - projects.each do |project|
+      tr
+        td
+          = link_to project.name, project
