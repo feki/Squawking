@@ -1,24 +1,51 @@
 .row-fluid
-  .span12.article
+  .span12.article.content
     .notice.row-fluid
       = notice
     .row-fluid
       .readonly-content.span12
         .row-fluid
+          .span12
+            .row-fluid
+              .span8
+                .row-fluid
+                  = link_to "#{@article.user.email}", '#'
+                .row-fluid
+                  = "created #{time_ago_in_words(@article.created_at)} ago "
+                  - unless time_ago_in_words(@article.created_at) ==  time_ago_in_words(@article.updated_at)
+                    = "(updated #{time_ago_in_words(@article.updated_at)} ago)"
+              .span4
+                .btn-group.pull-right
+                  a.btn.dropdown-toggle data-toggle="dropdown"
+                    ' Actions
+                    span.caret
+                  ul.dropdown-menu
+                    li
+                      = link_to 'Edit', edit_article_path(@article)
+                    li
+                      = link_to 'Delete', @article, data: { confirm: 'Are you sure?' }, method: :delete
+                    li
+                      = link_to 'Back to project', @article.project
+                /.row.pull-right
+                /  .btn-group
+                /    = link_to 'Edit article', edit_article_path(@article), remote: true, class: 'btn'
+                /    = link_to 'Delete article', @article, data: { confirm: "Are you sure?" }, method: :delete, class: 'btn'
+                /    = link_to 'Back to project', @article.project
+        .row-fluid
           ' Tags:
           = raw @article.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')
         .article-title.row-fluid
-          .btn-group.pull-right
-            a.btn.dropdown-toggle data-toggle="dropdown"
-              | Actions
-              span.caret
-            ul.dropdown-menu
-              li
-                = link_to 'Edit', edit_article_path(@article)
-              li
-                = link_to 'Delete', @article, data: { confirm: 'Are you sure?' }, method: :delete
-              li
-                = link_to 'Back to project', @article.project
+          /.btn-group.pull-right
+          /  a.btn.dropdown-toggle data-toggle="dropdown"
+          /    | Actions
+          /    span.caret
+          /  ul.dropdown-menu
+          /    li
+          /      = link_to 'Edit', edit_article_path(@article)
+          /    li
+          /      = link_to 'Delete', @article, data: { confirm: 'Are you sure?' }, method: :delete
+          /    li
+          /      = link_to 'Back to project', @article.project
           h2 = @article.title
         hr
         .article-content.row-fluid
@@ -28,10 +55,11 @@
             .row-fluid
               .span12
                 = link_to "New reaction", new_reaction_path(article_id: @article.id), remote: true, class: "btn btn-link pull-right"
-                h3 Reactions
-            .row-fluid
-              .reactions.readonly-content.span12#reactions
-                == render partial: "reactions/index", locals: { reactions: @article.reactions }
+.row-fluid
+  .reactions.readonly-content.span12#reactions
+    /h3
+    /  | Reactions
+    == render partial: "reactions/index", locals: { reactions: @article.reactions }
     /.new-reaction.row-fluid#new-reaction
     /  button class="btn btn-link pull-right" id="new_reaction_button"
     /    | New reaction

@@ -10,10 +10,24 @@
 /       | created by #{link_to comment.user.email, "#comment.user", class: "btn btn-link"}: #{time_ago_in_words(comment.created_at)}
 .row-fluid
   .comment.span12 id="comment#{comment.id}"
-    .comment-content
-      = comment.content
+    .row-fluid
+      .span8.author
+        .row-fluid
+          = link_to "#{comment.user.email}"
+        .row-fluid
+          = "created #{time_ago_in_words(comment.created_at)} ago "
+          - unless time_ago_in_words(comment.created_at) ==  time_ago_in_words(comment.updated_at)
+            = "(updated #{time_ago_in_words(comment.updated_at)} ago)"
+      .span4
+        .row.pull-right
+          = link_to "Edit comment", edit_comment_path(comment), remote: true, class: 'btn btn-link'
+          = link_to "Delete comment", comment, confirm: 'Are you sure?', method: :delete, :'data-action' => 'delete-comment', remote: true, class: 'btn btn-link'
     hr
-    =' link_to "Delete comment", comment, confirm: "Are you sure?", method: :delete, :"data-action" => "delete-comment", remote: true, class: "pull-right btn btn-link"
-    =' link_to "Edit comment", edit_comment_path(comment), remote: true, class: "pull-right btn btn-link"
-    .pull-left.created-info
-      | created by #{link_to comment.user.email, "#comment.user", class: "btn btn-link"}: #{time_ago_in_words(comment.created_at)}
+    .row-fluid
+      .span12.comment-content
+        = comment.content
+    /hr
+    /= link_to "Delete comment", comment, confirm: "Are you sure?", method: :delete, :"data-action" => "delete-comment", remote: true, class: "pull-right btn btn-link"
+    /= link_to "Edit comment", edit_comment_path(comment), remote: true, class: "pull-right btn btn-link"
+    /.pull-left.created-info
+    /  | created by #{link_to comment.user.email, "#comment.user", class: "btn btn-link"}: #{time_ago_in_words(comment.created_at)}
