@@ -15,6 +15,8 @@ gem 'less-rails', '2.2.3'
 gem 'twitter-bootstrap-rails', '2.1.2'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.9'
+# Gem for tagging.
+gem 'acts-as-taggable-on', '~> 2.3.1'
 
 # Markdown processing library
 gem 'redcarpet', '~> 2.2.2'
