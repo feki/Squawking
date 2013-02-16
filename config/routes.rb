@@ -10,7 +10,8 @@ RubyProject::Application.routes.draw do
   match 'home', :to => 'pages#home'
 
   devise_for :users
-
+  resources :users
+  
   resources :projects do
     member do
       # new article can be created only with associated project
@@ -18,6 +19,9 @@ RubyProject::Application.routes.draw do
 
       # new question can be created only with associated project
       get 'questions/new', as: 'new_question_of', to: 'questions#new'
+      
+      # path for page to add members
+      get 'add_members'
     end
   end
 
