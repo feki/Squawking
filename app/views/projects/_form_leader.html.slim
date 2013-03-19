@@ -1,0 +1,11 @@
+= form_for @project, html: { class: "form-horizontal" } do |f|
+  div class="control-group"
+    = f.label :leader_id, class: "control-label"
+    div class="controls"
+      - for user in User.find(:all)
+          div
+            = f.radio_button :leader_id, user.id
+            = user.email
+  div class="control-group"
+    div class="controls"
+      = f.submit 'Save'

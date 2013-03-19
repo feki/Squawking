@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  before_filter :authenticate_user!
   respond_to :html, :js
 
   # GET /answers
@@ -33,6 +34,7 @@ class AnswersController < ApplicationController
   def edit
     @answer = Answer.find(params[:id])
     # render partial: 'form', locals: {answer: @answer}
+    authorize! :manage, @reaction
     respond_with( @answer, :layout => !request.xhr? )
   end
 
@@ -42,6 +44,7 @@ class AnswersController < ApplicationController
     params[:answer][:question] = Question.find(params[:answer][:question_id])
     params[:answer].delete :question_id
     @answer = current_user.answers.create(params[:answer])
+    authorize! :manage, @reaction
     respond_with( @answer, :layout => !request.xhr? )
   end
 
@@ -50,7 +53,7 @@ class AnswersController < ApplicationController
   def update
     @answer = Answer.find(params[:id])
     params[:answer].delete :question_id
-
+    authorize! :manage, @reaction
     if @answer.update_attributes(params[:answer])
       respond_to do |format|
         format.html do
@@ -83,6 +86,7 @@ class AnswersController < ApplicationController
   # DELETE /answers/1.json
   def destroy
     @answer = Answer.find(params[:id])
+    authorize! :manage, @reaction
     @answer.destroy
     respond_with(@answer) do |format|
       format.js { render layout: false }

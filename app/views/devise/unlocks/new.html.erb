@@ -1,21 +1,23 @@
-<h2>Resend unlock instructions</h2>
+<div class="content_bubble">
+  <h2>Resend unlock instructions</h2>
 
-<%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name),
-      :html => { :method => :post, class: "form-horizontal" }) do |f| %>
-  <%= devise_error_messages! %>
+  <%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name),
+        :html => { :method => :post, class: "form-horizontal" }) do |f| %>
+    <%= devise_error_messages! %>
 
-  <div class="control-group">
-    <%= f.label :email, class: "control-label" %>
-    <div class="controls">
-      <%= f.email_field :email, placeholder: "email" %>
+    <div class="control-group">
+      <%= f.label :email, class: "control-label" %>
+      <div class="controls">
+        <%= f.email_field :email, placeholder: "email" %>
+      </div>
     </div>
-  </div>
 
-  <div class="control-group">
-    <div class="controls">
-      <%= f.submit "Resend unlock instructions", class: "btn" %>
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit "Resend unlock instructions", class: "btn" %>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 
-<%= render "devise/shared/links" %>
+  <%= render "devise/shared/links" %>
+</div>

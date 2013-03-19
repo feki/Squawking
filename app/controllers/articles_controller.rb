@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  before_filter :authenticate_user!
   # GET /articles
   # GET /articles.json
   def index
@@ -32,9 +33,7 @@ class ArticlesController < ApplicationController
   # GET /project/:id/articles/new.json
   def new
     @article = Article.new
-
     @project_id = params[:id]
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @article }
@@ -46,6 +45,7 @@ class ArticlesController < ApplicationController
     @title = 'Edit article'
     @article = Article.find(params[:id])
     @project_id = @article.project_id
+    authorize! :manage, @article
   end
 
   # POST /articles
@@ -54,7 +54,7 @@ class ArticlesController < ApplicationController
     params[:article][:project] = Project.find(params[:article][:project_id])
     params[:article].delete :project_id
     @article = current_user.articles.new(params[:article])
-
+    authorize! :create, @article
     respond_to do |format|
       if @article.save
         format.html { redirect_to @article, notice: 'Article was successfully created.' }
@@ -71,7 +71,7 @@ class ArticlesController < ApplicationController
   def update
     @article = Article.find(params[:id])
     params[:article].delete :project_id
-    
+    authorize! :manage, @article
     respond_to do |format|
       if @article.update_attributes(params[:article])
         format.html { redirect_to @article, notice: 'Article was successfully updated.' }
@@ -88,7 +88,7 @@ class ArticlesController < ApplicationController
   def destroy
     @article = Article.find(params[:id])
     @article.destroy
-
+    authorize! :manage, @article
     respond_to do |format|
       format.html { redirect_to articles_url }
       format.json { head :no_content }

@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_filter :authenticate_user!
   # GET /questions
   # GET /questions.json
   def index
@@ -39,6 +40,7 @@ class QuestionsController < ApplicationController
   def edit
     @question = Question.find(params[:id])
     @project = @question.project
+    authorize! :manage, @question
   end
 
   # POST /questions
@@ -47,7 +49,7 @@ class QuestionsController < ApplicationController
     params[:question][:project] = Project.find(params[:question][:project_id])
     params[:question].delete :project_id
     @question = current_user.questions.create(params[:question])
-
+    authorize! :create, @question
     respond_to do |format|
       if @question.save
         format.html { redirect_to @question, notice: 'Question was successfully created.' }
@@ -64,6 +66,7 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
     params[:question].delete :project_id
+    authorize! :manage, @question
     respond_to do |format|
       if @question.update_attributes(params[:question])
         format.html { redirect_to @question, notice: 'Question was successfully updated.' }
@@ -80,7 +83,7 @@ class QuestionsController < ApplicationController
   def destroy
     @question = Question.find(params[:id])
     @question.destroy
-
+    authorize! :manage, @question
     respond_to do |format|
       format.html { redirect_to questions_url }
       format.json { head :no_content }

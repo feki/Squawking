@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  before_filter :authenticate_user!
+  # load_and_authorize_resource
   # GET /projects
   # GET /projects.json
   def index
@@ -17,6 +19,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @questions = @project.questions
     @articles = Article.find_all_by_project_id(params[:id])
+    @leader = @project.leader_id ? User.find(@project.leader_id) : nil
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @project }
@@ -27,7 +30,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new.json
   def new
     @project = Project.new
-
+    authorize! :create, @project
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @project }
@@ -37,13 +40,24 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
+    authorize! :update, @project
+  end
+
+  def set_members
+    @project = Project.find(params[:id])
+    authorize! :update, @project
+  end
+
+  def set_leader
+    @project = Project.find(params[:id])
+    authorize! :update, @project
   end
 
   # POST /projects
   # POST /projects.json
   def create
     @project = Project.new(params[:project])
-
+    authorize! :create, @project
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
@@ -59,9 +73,10 @@ class ProjectsController < ApplicationController
   # PUT /projects/1.json
   def update
     @project = Project.find(params[:id])
-
+    authorize! :update, @project
+    project_update = params[:project] || { "user_ids"=>[] }
     respond_to do |format|
-      if @project.update_attributes(params[:project])
+      if @project.update_attributes(project_update)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { head :no_content }
       else
@@ -75,6 +90,7 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1.json
   def destroy
     @project = Project.find(params[:id])
+    authorize! :destroy, @project
     @project.destroy
 
     respond_to do |format|

@@ -1,5 +1,5 @@
 class ReactionsController < ApplicationController
-
+  before_filter :authenticate_user!
   respond_to :html, :xml, :js, :json
 
   # GET /reactions
@@ -29,13 +29,14 @@ class ReactionsController < ApplicationController
   def new
     @reaction = current_user.reactions.build
     @reaction.article = Article.find_by_id(params[:article_id])
-
+    authorize! :manage, @reaction
     respond_with(@reaction, layout: !request.xhr?)
   end
 
   # GET /reactions/1/edit
   def edit
     @reaction = Reaction.find(params[:id])
+    authorize! :manage, @reaction
     respond_with( @reaction, :layout => !request.xhr? )
   end
 
@@ -46,7 +47,7 @@ class ReactionsController < ApplicationController
     params[:reaction].delete :article_id
 
     @reaction = current_user.reactions.new(params[:reaction])
-
+    authorize! :manage, @reaction
     if @reaction.save
       respond_to do |format|
         format.html do
@@ -88,7 +89,7 @@ class ReactionsController < ApplicationController
   def update
     @reaction = Reaction.find(params[:id])
     params[:reaction].delete :article_id
-
+    authorize! :manage, @reaction
     #respond_to do |format|
     #  if @reaction.update_attributes(params[:reaction])
     #    format.html { redirect_to @reaction.article, notice: 'Reaction was successfully updated.' }
@@ -132,7 +133,7 @@ class ReactionsController < ApplicationController
   def destroy
     @reaction = Reaction.find(params[:id])
     @reaction.destroy
-
+    authorize! :manage, @reaction
     if @reaction.destroyed?
       respond_to do |format|
         format.html do

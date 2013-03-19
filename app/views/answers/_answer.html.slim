@@ -3,7 +3,7 @@
 			.row-fluid
 				.span8.author
 					.row-fluid
-						= link_to "#{answer.user.email}", '#'
+						= link_to "#{answer.user.email}", answer.user
 					.row-fluid
 						= "created #{time_ago_in_words(answer.created_at)} ago "
 						- unless time_ago_in_words(answer.created_at) ==  time_ago_in_words(answer.updated_at)				
@@ -11,8 +11,9 @@
 				.span4
 					.row.pull-right
 				    	ul.nav.nav-pills
-					      	li = link_to 'Edit', edit_answer_path(answer), remote: true
-					      	li = link_to 'Delete', answer, confirm: 'Are you sure?', method: :delete, :"data-action" => "delete-answer", remote: true
+				    		- if can? :update, answer
+					      		li = link_to 'Edit', edit_answer_path(answer), remote: true
+					      		li = link_to 'Delete', answer, confirm: 'Are you sure?', method: :delete, :"data-action" => "delete-answer", remote: true
 			.markdown-readonly
 			  	= markdown(answer.content)
 			.row.pull-right

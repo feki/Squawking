@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-
+  before_filter :authenticate_user!
   respond_to :html, :xml, :js, :json
 
   # GET /comments
@@ -28,6 +28,7 @@ class CommentsController < ApplicationController
   # GET /comments/new.json
   def new
     @comment = current_user.comments.build
+    authorize! :manage, @comment
     if params.has_key? :reaction_id
       @comment.commentable = Reaction.find_by_id(params[:reaction_id].to_i)
     else  
@@ -39,6 +40,7 @@ class CommentsController < ApplicationController
   # GET /comments/1/edit
   def edit
     @comment = Comment.find(params[:id])
+    authorize! :manage, @comment
     respond_with(@comment, layout: !request.xhr?)
   end
 
@@ -57,7 +59,7 @@ class CommentsController < ApplicationController
     # params[:comment].delete :commentable_id
 
     @comment = current_user.comments.new(params[:comment])
-
+    authorize! :manage, @comment
     if @comment.save
       respond_to do |format|
           format.html do
@@ -90,7 +92,7 @@ class CommentsController < ApplicationController
   # PUT /comments/1.json
   def update
     @comment = Comment.find(params[:id])
-
+    authorize! :manage, @comment
     if @comment.update_attributes(params[:comment])
       respond_to do |format|
         format.html do
@@ -124,7 +126,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
-
+    authorize! :manage, @comment
     if @comment.destroyed?
       respond_to do |format|
         format.html do

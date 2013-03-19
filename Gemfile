@@ -21,6 +21,8 @@ gem 'acts-as-taggable-on', '~> 2.3.1'
 # Markdown processing library
 gem 'redcarpet', '~> 2.2.2'
 
+# Authorization
+gem 'cancan', '~> 1.6.9'
 
 # Gems used only for assets and not required
 # in production environments by default.

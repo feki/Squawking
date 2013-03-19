@@ -8,18 +8,27 @@
           span.caret
         ul.dropdown-menu
           li
-            = link_to 'Add new article', new_article_of_project_path(@project)
+            -if current_user.project_ids.include?(@project.id) || current_user.admin?
+              = link_to 'Add new article', new_article_of_project_path(@project)
           li
-            = link_to 'Add new question', new_question_of_project_path(@project)
+            -if current_user.project_ids.include?(@project.id) || current_user.admin?
+              = link_to 'Add new question', new_question_of_project_path(@project)
           li.divider
           li
-            = link_to 'Edit', edit_project_path(@project)
+            - if can? :update, @project
+              = link_to 'Edit', edit_project_path(@project)
           li
-            = link_to 'Set leader', '#'
-            = link_to 'Add members', '#'
+            - if can? :update, @project
+              = link_to 'Set leader', set_leader_project_path(@project)
+              = link_to 'Set members', set_members_project_path(@project)
           li
-            = link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete
+            - if can? :destroy, @project
+              = link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete
       h2 = @project.name
+      - if @leader
+        text Team leader 
+        = link_to @leader.email, @leader
+
       .tabbable
         ul.nav.nav-tabs
           li.active

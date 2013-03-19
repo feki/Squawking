@@ -7,7 +7,7 @@
         .row-fluid
           .span8.author
             .row-fluid
-              = link_to "#{reaction.user.email}", '#'
+              = link_to "#{reaction.user.email}", reaction.user
             .row-fluid
               = "created #{time_ago_in_words(reaction.created_at)} ago "
               - unless time_ago_in_words(reaction.created_at) ==  time_ago_in_words(reaction.updated_at)
@@ -15,8 +15,9 @@
           .span4
             .row.pull-right
               .btn-group
-                = link_to 'Edit reaction', edit_reaction_path(reaction), remote: true, class: 'btn btn-link'
-                = link_to 'Delete reaction', reaction, confirm: "Are you sure?", method: :delete, :"data-action" => "delete-reaction", remote: true, class: 'btn btn-link'
+                - if can? :update, reaction
+                  = link_to 'Edit reaction', edit_reaction_path(reaction), remote: true, class: 'btn btn-link'
+                  = link_to 'Delete reaction', reaction, confirm: "Are you sure?", method: :delete, :"data-action" => "delete-reaction",:'data-reaction-id' => reaction.id, remote: true, class: 'btn btn-link'
         .row-fluid
           .span12
             hr

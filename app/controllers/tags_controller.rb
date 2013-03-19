@@ -1,4 +1,5 @@
 class TagsController < ApplicationController
+  before_filter :authenticate_user!
   # GET /tags/:tag
   def index
     @tag = params[:tag]

@@ -88,7 +88,7 @@ jQuery ->
     .live("ajax:success", (evt, data, status, xhr) ->
       $a = $(this);
       # remove reaction from DOM tree
-      $a.parent().remove();
+      $('#reaction' + $a.data('reaction-id')).parent().remove();
     )
     .live('ajax:complete', (evt, xhr, status) ->
       # set up link text to original text

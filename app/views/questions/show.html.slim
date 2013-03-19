@@ -2,14 +2,16 @@
   p#notice = notice
   .btn-group.pull-right
     = link_to 'Back to project', @question.project, class: "btn"
-    = link_to 'Edit', edit_question_path(@question), class: "btn"
-    = link_to 'Delete', @question, confirm: 'Are you sure?', method: :delete, class: "btn"
+    - if can? :update, @question
+      = link_to 'Edit', edit_question_path(@question), class: "btn"
+    - if can? :destroy, @question
+      = link_to 'Delete', @question, confirm: 'Are you sure?', method: :delete, class: "btn"
 
   ' Tags:
   = raw @question.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')
 
   h2 = @question.title
-
+  = link_to "#{@question.user.email}", @question.user
   .markdown-readonly
     = markdown(@question.content)
 

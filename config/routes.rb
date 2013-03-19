@@ -21,7 +21,8 @@ RubyProject::Application.routes.draw do
       get 'questions/new', as: 'new_question_of', to: 'questions#new'
       
       # path for page to add members
-      get 'add_members'
+      get 'set_members'
+      get 'set_leader'
     end
   end
 
